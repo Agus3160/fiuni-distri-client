@@ -1,0 +1,8 @@
+
+body {
+  background-color: black;
+}
+
+.shadow {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
