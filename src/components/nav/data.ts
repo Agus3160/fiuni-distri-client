@@ -1,15 +1,19 @@
 
-export const navLinks = [
-  {
-    url:"/",
-    name:"Home"
-  },
+export type NavLink = {
+  url: string
+  name: string
+  auth: "auth" | "no-auth" | "both"
+}
+
+export const navLinks: NavLink[] = [
   {
     url:"login",
-    name:"Login"
+    name:"Login",
+    auth:"no-auth"
   },
   {
     url:"about",
-    name:"About"
+    name:"About",
+    auth:"both"
   }
 ]

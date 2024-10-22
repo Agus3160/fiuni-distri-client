@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import { navLinks } from "./data";
+import { useAuth } from "../../context/AuthContext";
 
 export default function NavBar() {
+  const { isAuth, logout } = useAuth();
+  const hasSession = isAuth();
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark top shadow">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           R.R.H.H
@@ -38,8 +42,9 @@ export default function NavBar() {
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               {navLinks.map((n) => {
+                if(n.auth === "no-auth" && hasSession) return;
                 return (
-                  <li className="nav-item">
+                  <li key={n.url} className="nav-item">
                     <Link
                       className="nav-link active"
                       aria-current="page"
@@ -50,6 +55,18 @@ export default function NavBar() {
                   </li>
                 );
               })}
+              {hasSession && (
+                <li className="nav-item">
+                  <button
+                    type="button"
+                    onClick={logout}
+                    className="nav-link active"
+                    aria-current="page"
+                  >
+                    Logout
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </div>
