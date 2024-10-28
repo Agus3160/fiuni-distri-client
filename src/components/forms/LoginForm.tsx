@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { loginSchema, LoginType } from "../../lib/auth/definitions";
-import { authLogin } from "../../lib/auth/service";
+import { loginSchema, LoginType } from "../../lib/auth/auth.types";
+import { authLogin } from "../../lib/auth/auth.service";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,8 +17,8 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data: LoginType) => {
-    const { email, password } = data;
-    const session = await authLogin(email, password);
+    const { data: session, message, success } = await authLogin(data);
+    if (!success || !session) return alert(message);
     login(session);
     navigate("/", { replace: true });
   };
