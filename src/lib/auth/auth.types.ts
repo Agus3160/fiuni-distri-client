@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-// AUTH SCHEMAS 
+// AUTH SCHEMAS
 
 // SIGNUP SCHEMA
 export const signUpSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
   username: z.string().min(5),
-})
+});
 export type SignUpType = z.infer<typeof signUpSchema>;
 
 // LOGIN SCHEMA
@@ -16,9 +16,9 @@ export type LoginType = z.infer<typeof loginSchema>;
 
 // AUTH TYPES
 export interface Session {
-  username:string;
+  username: string;
   email: string;
-  roles: string[]
+  roles: string[];
   accessToken: string;
 }
 
@@ -26,15 +26,15 @@ export interface Session {
 export type AuthContextType = {
   session: Session | null;
 
+  getMe: () => Promise<void>;
   login: (session: Session) => void;
-  isAuth: () => Session|null;
+  isAuth: () => Session | null;
   logout: () => void;
 };
 
 export type AuthProviderProps = {
   children: React.ReactNode;
 };
-
 
 // AUTH REDUCER TYPES AND DEFINITION
 export type AuthActions =

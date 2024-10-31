@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import { loginSchema, LoginType } from "../../lib/auth/auth.types";
 import { authLogin } from "../../lib/auth/auth.service";
-import { useAuth } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "../../context/auth/useContext";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -73,7 +73,7 @@ export default function LoginForm() {
         >
           Ingresar
         </button>
-        <Link className="fs-6 fw-ligth" to="/register">
+        <Link className="fs-6 fw-ligther" to="/signup">
           ¿No tienes una cuenta? Regístrate
         </Link>
       </div>

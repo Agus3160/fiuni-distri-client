@@ -7,6 +7,11 @@ export type NavLink = {
 
 export const navLinks: NavLink[] = [
   {
+    url:"signup",
+    name:"Signup",
+    auth:"no-auth"
+  },
+  {
     url:"login",
     name:"Login",
     auth:"no-auth"

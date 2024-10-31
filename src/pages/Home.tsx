@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/auth/useContext";
 
-type Props = {};
-
-export default function Home({}: Props) {
+export default function Home() {
+  const { isAuth } = useAuth();
+  const session = isAuth();
   return (
     <main role="main">
       <main className="flex-shrink-0">
@@ -18,14 +19,16 @@ export default function Home({}: Props) {
                     Mediante esta herramienta podras alcanzar tu mayor potencial
                     como empresa y mantener un registro de tus empleados
                   </p>
-                  <div className="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                    <Link
-                      className="btn btn-primary btn-lg px-4 me-sm-3"
-                      to="/login"
-                    >
-                      Login
-                    </Link>
-                  </div>
+                  {!session && (
+                    <div className="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                      <Link
+                        className="btn btn-primary btn-lg px-4 me-sm-3"
+                        to="/login"
+                      >
+                        Login
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="col-xl-5 col-xxl-6 d-none d-xl-block text-center">

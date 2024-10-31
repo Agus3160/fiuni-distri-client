@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
 import { validateRoles } from "../../lib/utils";
+import { useAuth } from "../../context/auth/useContext";
 
 type Props = {
   rol:string[]
