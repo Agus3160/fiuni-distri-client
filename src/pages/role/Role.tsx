@@ -7,13 +7,16 @@ import Loading from "../Loading";
 import CommonsFilterBar from "../../components/global/CommonsFilterBar";
 import { mapUrlSearchParamsToObject } from "../../lib/utils";
 import RoleCard from "../../components/role/RoleCard";
+import Pagination from "../../components/global/Pagination";
+import { PaginationResponse } from "../../lib/definitions";
+import BasicSearchBar from "../../components/global/BasicSearchBar";
 
 export default function Role() {
   const { isAuth } = useAuth();
 
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const [role, setRole] = useState<RoleDto[] | null>(null);
+  const [role, setRole] = useState<PaginationResponse<RoleDto> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const session = isAuth();
@@ -28,7 +31,7 @@ export default function Role() {
       if (!success || !data) {
         alert(message);
       } else {
-        setRole(data.content);
+        setRole(data);
         setIsLoading(false);
       }
     };
@@ -40,14 +43,16 @@ export default function Role() {
   if (!role) return <div>Role not found</div>;
 
   return (
-    <div className="w-100 pt-5 h-full bg-dark">
+    <div className="w-100  pt-5 h-full bg-dark">
       <div className="container h-100 d-flex gap-3 flex-column justify-content-center ">
+        <BasicSearchBar paramKey="rol" placeholder="Search by rol..." />
         <CommonsFilterBar />
-        {
-          role.length === 0
-            ? "No roles found"
-            : role.map((role) => <RoleCard key={role.id} role={role} />)
-        }
+        {role.page.totalElements === 0
+          ? "No roles found"
+          : role.content.map((role) => <RoleCard key={role.id} role={role} />)}
+      </div>
+      <div className="mt-4">
+        <Pagination page={role.page} />
       </div>
     </div>
   );

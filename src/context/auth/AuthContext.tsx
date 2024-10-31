@@ -27,7 +27,7 @@ export const AuthProvider = function ({ children }: AuthProviderProps) {
   }, [navigate]);
 
   const getMe = useCallback(async () => {
-    if(!state) return;
+    if(state) return;
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) return dispatch({ type: "LOGOUT" });
     try {
