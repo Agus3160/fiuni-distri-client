@@ -25,6 +25,7 @@ export interface Session {
 // AUTH CONTEXT TYPES
 export type AuthContextType = {
   session: Session | null;
+  isLoading: boolean;
 
   getMe: () => Promise<void>;
   login: (session: Session) => void;

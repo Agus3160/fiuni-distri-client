@@ -17,6 +17,7 @@ const BasicSearchBar = ({ paramKey, placeholder }: Props) => {
   };
 
   const handleSearch = () => {
+    if(query === "") return;
     const newParams = new URLSearchParams(params);
     newParams.set(paramKey, query);
     setParams(newParams);

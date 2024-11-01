@@ -1,7 +1,7 @@
 import { api } from "../../api";
 import { PaginationResponse } from "../../definitions";
 import { mapObjectToQueryStringParams } from "../../utils";
-import { RoleDto, RoleFilter } from "./rol.types";
+import { CreateRoleType, RoleDto, RoleFilter } from "./rol.types";
 
 const tempHostUrl = "http://localhost:9091/";
 
@@ -33,3 +33,18 @@ export const getRoles = async (accessToken: string, filter?: RoleFilter) => {
     tempHostUrl
   );
 };
+
+export const createRol = async (rol: CreateRoleType, accessToken: string) => {
+  return await api<RoleDto>(
+    "role",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(rol),
+    },
+    tempHostUrl
+  );
+}

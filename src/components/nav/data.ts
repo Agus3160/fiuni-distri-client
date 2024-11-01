@@ -1,8 +1,10 @@
+import { RoleType } from "../../lib/definitions"
 
 export type NavLink = {
   url: string
   name: string
   auth: "auth" | "no-auth" | "both"
+  role?: RoleType
 }
 
 export const navLinks: NavLink[] = [
@@ -15,6 +17,12 @@ export const navLinks: NavLink[] = [
     url:"login",
     name:"Login",
     auth:"no-auth"
+  },
+  {
+    url:"role",
+    name:"Role",
+    auth:"auth",
+    role:"USER"
   },
   {
     url:"about",

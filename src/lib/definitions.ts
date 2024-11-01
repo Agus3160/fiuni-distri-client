@@ -41,3 +41,6 @@ export const baseFilterInitValues: BaseFilter = {
 };
 
 export const API_HOST_URL = import.meta.env.VITE_API_HOST_URL;
+
+export const roles = [ "ADMIN", "USER" ] as const;
+export type RoleType = typeof roles[number];

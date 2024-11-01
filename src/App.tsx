@@ -8,6 +8,7 @@ import NotFound from "./pages/error/NotFound";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import Role from "./pages/role/Role";
+import CreateRole from "./pages/role/CreateRole";
 
 function App() {
   return (
@@ -24,7 +25,10 @@ function App() {
 
           {/* Authenticated routes */}
           <Route element={<ProtectedRoute />}>
-            <Route path="role" element={<Role />} />
+            <Route path="role/">
+              <Route path="" element={<Role />} />
+              <Route path="create" element={<CreateRole />} />
+            </Route>
           </Route>
 
           {/* Authorized routes */}

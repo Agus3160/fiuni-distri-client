@@ -1,30 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../context/auth/useContext";
-import { useState, useEffect } from "react";
+import Loading from "../../pages/Loading";
 
 export default function ProtectedRoute() {
-  const { getMe } = useAuth();
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasSession, setHasSession] = useState(false);
-
-  useEffect(() => {
-    const verifyAuth = async () => {
-      try {
-        await getMe()
-        setHasSession(true);
-      } catch (error) {
-        console.error("You are not authenticated", error);
-        setHasSession(false);
-      }finally{
-        setIsLoading(false);
-      }
-    }
-    verifyAuth();
-  }, [getMe]);
-
-  if(isLoading) return null
-  if (!hasSession && !isLoading) return <Navigate to="/login" replace />;
+  const { isAuth, isLoading } = useAuth();
+  const session = isAuth();
+  if(isLoading) return <Loading />
+  if (!session && !isLoading) return <Navigate to="/login" replace />;
   return <Outlet />;
 }
 

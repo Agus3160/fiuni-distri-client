@@ -4,8 +4,8 @@ import { useAuth } from "../../context/auth/useContext";
 
 export default function NavBar() {
   const { isAuth, logout } = useAuth();
-  const hasSession = isAuth();
-
+  const session = isAuth();
+  console.log(session);
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark top shadow">
       <div className="container-fluid">
@@ -42,7 +42,8 @@ export default function NavBar() {
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               {navLinks.map((n) => {
-                if(n.auth === "no-auth" && hasSession) return;
+                if(n.auth === "no-auth" && session) return;
+                if(n.role && !session?.roles.includes(n.role)) return;
                 return (
                   <li key={n.url} className="nav-item">
                     <Link
@@ -55,7 +56,7 @@ export default function NavBar() {
                   </li>
                 );
               })}
-              {hasSession && (
+              {session && (
                 <li className="nav-item">
                   <button
                     type="button"

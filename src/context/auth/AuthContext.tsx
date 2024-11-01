@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useReducer } from "react";
+import { createContext, useCallback, useEffect, useReducer, useState } from "react";
 import {
   AuthContextType,
   AuthProviderProps,
@@ -11,6 +11,8 @@ import { authMe } from "../../lib/auth/auth.service";
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = function ({ children }: AuthProviderProps) {
+  
+  const [isLoading, setIsLoading] = useState(true);
   const [state, dispatch] = useReducer(authReducer, null);
   const navigate = useNavigate();
 
@@ -38,6 +40,8 @@ export const AuthProvider = function ({ children }: AuthProviderProps) {
       });
     } catch (error) {
       alert(error);
+    }finally{
+      setIsLoading(false);
     }
   }, []);
 
@@ -48,7 +52,7 @@ export const AuthProvider = function ({ children }: AuthProviderProps) {
   }, [getMe]);
 
   return (
-    <AuthContext.Provider value={{ session: state, login, logout, isAuth, getMe}}>
+    <AuthContext.Provider value={{ session: state, isLoading, login, logout, isAuth, getMe}}>
       {children}
     </AuthContext.Provider>
   );
