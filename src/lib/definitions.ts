@@ -1,3 +1,9 @@
+import { Bounce, ToastContainerProps } from "react-toastify";
+import { z } from "zod";
+
+//*********************  API CONFIG **************************
+export const API_HOST_URL = import.meta.env.VITE_API_HOST_URL;
+
 export interface ApiResponse<T> {
   data: T;
   message: string;
@@ -5,13 +11,6 @@ export interface ApiResponse<T> {
   errors: string[] | null;
   httpStatus: number;
   timeStamp: string;
-}
-
-export interface BaseDto {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
 }
 
 export interface PageProps {
@@ -34,21 +33,32 @@ export interface BaseFilter {
   "end-date"?: string;
 }
 
-export const baseFilterInitValues: BaseFilter = {
-  page: 0,
-  size: 10,
-  "include-deleted": false,
-};
+export const baseDtoSchema = z.object({
+  id: z.number(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  deletedAt: z.string().nullable(),
+})
+export type BaseDto = z.infer<typeof baseDtoSchema>;
 
-export const API_HOST_URL = import.meta.env.VITE_API_HOST_URL;
 
+//********************* ROLES CONFIG **************************
 export const roles = ["ADMIN", "USER"] as const;
 export type RoleType = (typeof roles)[number];
 
-export type ToastMessage = {
-  message: string;
-  type: "danger" | "warning" | "info";
-};
-export type ToastContextType = {
-  toastMessage: (data:ToastMessage) => void;
+
+//*******************  TOASTIFY CONFIG ************************ 
+export const toastConfig: ToastContainerProps = {
+  position: "top-right",
+  autoClose: 3000,
+  limit: 3,
+  hideProgressBar: false,
+  newestOnTop: false,
+  closeOnClick: true,
+  rtl: false,
+  pauseOnFocusLoss: true,
+  draggable: false,
+  pauseOnHover: true,
+  theme: "dark",
+  transition: Bounce,
 };

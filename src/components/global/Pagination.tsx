@@ -1,24 +1,29 @@
 import { useSearchParams } from "react-router-dom";
 import { PageProps } from "../../lib/definitions";
-import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  ChevronFirst,
+  ChevronLast,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { getVisiblePages } from "../../lib/utils";
 
 type Props = {
   page: PageProps;
 };
 
 const Pagination = ({ page }: Props) => {
-
   const { number, totalPages } = page;
   const [params, setParams] = useSearchParams();
 
   // Verify the number of visible pages
-  if(totalPages < 1) return null;
+  if (totalPages < 1) return null;
 
   //currentPage
   const currentPage = number + 1;
 
   // number of visible pages
-  const visiblePages = 5;
+  const MAX_VISIBLE_PAGES = 5;
 
   // last and fisrt pages boolean values
   const isFirstPage = currentPage === 1;
@@ -27,14 +32,12 @@ const Pagination = ({ page }: Props) => {
   //Array of the pages
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
-  const getVisiblePages = () => {
-    if (totalPages <= visiblePages) {
-      return pages;
-    }
-    const start = Math.max(1, currentPage - Math.floor(visiblePages / 2));
-    const end = Math.min(totalPages, start + visiblePages - 1);
-    return pages.slice(start - 1, end);
-  };
+  const visiblePages = getVisiblePages(
+    pages,
+    currentPage,
+    totalPages,
+    MAX_VISIBLE_PAGES
+  );
 
   const changePageHandler = (currentPage: number, type: "next" | "prev") => {
     if (currentPage + 1 > totalPages || currentPage + 1 < 1) return;
@@ -48,20 +51,22 @@ const Pagination = ({ page }: Props) => {
   };
 
   const handlePageChange = (page: number) => {
-    if(page > totalPages || page < 1) return;
+    if (page > totalPages || page < 1) return;
     const newParams = new URLSearchParams(params);
-    newParams.set("page", (page-1).toString());
+    newParams.set("page", (page - 1).toString());
     setParams(newParams);
     window.location.reload();
-  }
+  };
+
+  if (visiblePages.length === 1) return null;
 
   return (
     <nav aria-label="Page navigation example">
       <ul className="pagination justify-content-center">
-      <li className={"page-item" + (isFirstPage ? " disabled" : "")}>
+        <li className={"page-item" + (isFirstPage ? " disabled" : "")}>
           <button
             disabled={isFirstPage}
-            onClick={()=> handlePageChange(1)}
+            onClick={() => handlePageChange(1)}
             className="page-link"
           >
             <ChevronFirst size={20} />
@@ -76,12 +81,14 @@ const Pagination = ({ page }: Props) => {
             <ChevronLeft size={20} />
           </button>
         </li>
-        {getVisiblePages().map((page) => (
+        {visiblePages.map((page) => (
           <li key={page} className="page-item">
             <button
               disabled={page === currentPage}
               onClick={() => handlePageChange(page)}
-              className={"page-link " + (page === currentPage ? " active" : "")}
+              className={
+                "page-link h-100 " + (page === currentPage ? " active" : "")
+              }
             >
               {page}
             </button>
@@ -99,7 +106,7 @@ const Pagination = ({ page }: Props) => {
         <li className={"page-item" + (isLastPage ? " disabled" : "")}>
           <button
             disabled={isLastPage}
-            onClick={()=> handlePageChange(totalPages)}
+            onClick={() => handlePageChange(totalPages)}
             className="page-link"
           >
             <ChevronLast size={20} />

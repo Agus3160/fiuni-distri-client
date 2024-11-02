@@ -48,3 +48,33 @@ export const createRol = async (rol: CreateRoleType, accessToken: string) => {
     tempHostUrl
   );
 }
+
+export const deleteRolById = async (id: number, accessToken: string) => {
+  return await api<RoleDto>(
+    "role/" + id,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+    tempHostUrl
+  );
+}
+
+
+export const updateRolById = async (id: number, rol: RoleDto, accessToken: string) => {
+  return await api<RoleDto>(
+    "role/" + id,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(rol),
+    },
+    tempHostUrl
+  );
+}

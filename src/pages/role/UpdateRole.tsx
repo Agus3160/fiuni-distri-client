@@ -6,6 +6,7 @@ import { RoleDto } from "../../lib/api/rol/rol.types";
 import { getRolById } from "../../lib/api/rol/rol.service";
 import Loading from "../Loading";
 import { useAuth } from "../../context/auth/useContext";
+import { toast } from "react-toastify";
 
 const UpdateRole = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,7 +22,7 @@ const UpdateRole = () => {
       session!.accessToken
     );
     if (!success || !data) {
-      alert(message);
+      toast.error(message);
     } else {
       setRole(data);
     }

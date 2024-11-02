@@ -1,40 +1,39 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/auth/useContext";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createRoleSchema, CreateRoleType } from "../../lib/api/rol/rol.types";
-import { createRol } from "../../lib/api/rol/rol.service";
+import { RoleDto, roleSchema } from "../../lib/api/rol/rol.types";
+import { createRol, updateRolById } from "../../lib/api/rol/rol.service";
+import { toast } from "react-toastify";
 
 type Props = {
-  initialValues?: CreateRoleType;
-}
+  initialValues?: RoleDto;
+};
 
 const RoleForm = ({ initialValues }: Props) => {
-  const { isAuth } = useAuth();
-  const session = isAuth();
-
+  const { session } = useAuth();
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<CreateRoleType>({
-    resolver: zodResolver(createRoleSchema),
+  } = useForm<RoleDto>({
+    resolver: zodResolver(roleSchema.partial()),
     defaultValues: initialValues,
   });
 
-  const onSubmit = async (data: CreateRoleType) => {
-    try {
-      const {
-        data: res,
-        message,
-        success,
-      } = await createRol(data, session!.accessToken);
-      if (res && success) alert(message);
-    } catch (error) {
-      alert(error);
-    } finally {
+  const onSubmit = async (data: RoleDto) => {
+    const {
+      data: res,
+      message,
+      success,
+    } = initialValues
+      ? await updateRolById(initialValues.id, data, session!.accessToken)
+      : await createRol(data, session!.accessToken);
+
+    if (res && success) {
+      toast.success(message);
       reset();
-    }
+    } else toast.error(message);
   };
 
   return (

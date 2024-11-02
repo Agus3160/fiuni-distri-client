@@ -42,7 +42,8 @@ export default function Role() {
 
   if (isLoading) return <Loading />;
 
-  if (!paginationRole) return <div className="text-danger">Error obteniendo roles</div>;
+  if (!paginationRole)
+    return <div className="text-danger">Error obteniendo roles</div>;
 
   return (
     <div className="w-100 pt-5 h-full bg-dark">
@@ -65,7 +66,12 @@ export default function Role() {
         {paginationRole.page.totalElements === 0
           ? "Ningun rol fue encontrado"
           : paginationRole.content.map((role) => (
-              <RoleCard key={role.id} role={role} />
+              <RoleCard
+                setPaginationRole={setPaginationRole}
+                paginationRole={paginationRole}
+                key={role.id}
+                role={role}
+              />
             ))}
       </div>
       <div className="mt-4">

@@ -9,8 +9,9 @@ import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import Role from "./pages/role/Role";
 import CreateRole from "./pages/role/CreateRole";
-import Puesto from "./pages/puesto/puesto";
 import CreatePuesto from "./pages/puesto/CreatePuesto";
+import Puesto from "./pages/puesto/Puesto";
+import UpdateRole from "./pages/role/UpdateRole";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="role/">
               <Route path="" element={<Role />} />
               <Route path="create" element={<CreateRole />} />
+              <Route path="update/:id" element={<UpdateRole />} />
             </Route>
 
             <Route path="puestos/">
