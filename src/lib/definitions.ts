@@ -27,20 +27,28 @@ export interface PaginationResponse<T> {
 }
 
 export interface BaseFilter {
-  "page"?: number;
-  "size"?: number;
+  page?: number;
+  size?: number;
   "include-deleted"?: boolean;
   "start-date"?: string;
   "end-date"?: string;
 }
 
 export const baseFilterInitValues: BaseFilter = {
-  "page": 0,
-  "size": 10,
+  page: 0,
+  size: 10,
   "include-deleted": false,
 };
 
 export const API_HOST_URL = import.meta.env.VITE_API_HOST_URL;
 
-export const roles = [ "ADMIN", "USER" ] as const;
-export type RoleType = typeof roles[number];
+export const roles = ["ADMIN", "USER"] as const;
+export type RoleType = (typeof roles)[number];
+
+export type ToastMessage = {
+  message: string;
+  type: "danger" | "warning" | "info";
+};
+export type ToastContextType = {
+  toastMessage: (data:ToastMessage) => void;
+};

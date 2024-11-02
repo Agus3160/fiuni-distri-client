@@ -5,7 +5,7 @@ export default function Home() {
   const { isAuth } = useAuth();
   const session = isAuth();
   return (
-    <main role="main">
+    <main role="main" className="bg-dark" >
       <main className="flex-shrink-0">
         <header className="bg-dark py-5">
           <div className="container px-5">
