@@ -17,8 +17,8 @@ export default function Puesto(){
 
     const navigate = useNavigate();
     const [params] = useSearchParams();
-    const [paginationPuesto, setPaginationPuesto] =
-    useState<PaginationResponse<PuestoDto> | null>(null);
+    const [paginationPuesto, setPaginationPuesto] = 
+      useState<PaginationResponse<PuestoDto> | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     const session = isAuth();
@@ -42,7 +42,8 @@ export default function Puesto(){
 
     if (isLoading) return <Loading />;
 
-    if (!paginationPuesto) return <div className="text-danger">Error obteniendo puestos</div>;
+    if (!paginationPuesto) 
+      return <div className="text-danger">Error obteniendo puestos</div>;
 
     return (
         <div className="w-100 pt-5 h-full bg-dark">
@@ -65,7 +66,12 @@ export default function Puesto(){
             {paginationPuesto.page.totalElements === 0
               ? "Ningun puesto fue encontrado"
               : paginationPuesto.content.map((p) => (
-                  <PuestoCard key={p.id} puesto={p} />
+                  <PuestoCard
+                    setPaginationPuesto={setPaginationPuesto}
+                    paginationPuesto={paginationPuesto}
+                    key={p.id}
+                    puesto={p}
+                    />
                 ))}
           </div>
           <div className="mt-4">

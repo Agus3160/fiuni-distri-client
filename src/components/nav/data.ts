@@ -19,6 +19,12 @@ export const navLinks: NavLink[] = [
     auth:"no-auth"
   },
   {
+    url:"puestos",
+    name:"Puestos",
+    auth:"auth",
+    role:"USER"
+  },
+  {
     url:"role",
     name:"Role",
     auth:"auth",
