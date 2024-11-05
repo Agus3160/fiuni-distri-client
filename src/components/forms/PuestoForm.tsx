@@ -1,44 +1,40 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/auth/useContext";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  createPuestoSchema,
-  CreatePuestoType,
-} from "../../lib/api/puesto/puesto.types";
-import { createPuesto } from "../../lib/api/puesto/puesto.service";
+import { PuestoDto, puestoSchema } from "../../lib/api/puesto/puesto.types";
+import { createPuesto, updatePuestoById } from "../../lib/api/puesto/puesto.service";
 import { toast } from "react-toastify";
 
 type Props = {
-  initialValues?: CreatePuestoType;
+  initialValues?: PuestoDto;
 };
 
 const PuestoForm = ({ initialValues }: Props) => {
-  const { isAuth } = useAuth();
-  const session = isAuth();
+  const { session } = useAuth();
 
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<CreatePuestoType>({
-    resolver: zodResolver(createPuestoSchema),
+  } = useForm<PuestoDto>({
+    resolver: zodResolver(puestoSchema.partial()),
     defaultValues: initialValues,
   });
 
-  const onSubmit = async (data: CreatePuestoType) => {
-    try {
-      const {
-        data: res,
-        message,
-        success,
-      } = await createPuesto(data, session!.accessToken);
-      if (res && success) toast.success(message);
-    } catch (error) {
-      if (error instanceof Error) toast.error(error.message);
-    } finally {
+  const onSubmit = async (data: PuestoDto) => {
+    const {
+      data: res,
+      message,
+      success,
+    } = initialValues
+      ? await updatePuestoById(initialValues.id, data, session!.accessToken)
+      : await createPuesto(data, session!.accessToken);
+
+    if (res && success) {
+      toast.success(message);
       reset();
-    }
+    } else toast.error(message);
   };
 
   return (

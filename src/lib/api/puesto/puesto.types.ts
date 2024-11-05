@@ -1,10 +1,5 @@
 import { z } from "zod";
-import { BaseDto, BaseFilter } from "../../definitions";
-
-export interface PuestoDto extends BaseDto{
-    nombre: string;
-    sueldo: number;
-}
+import { baseDtoSchema, BaseFilter } from "../../definitions";
 
 export const createPuestoSchema = z.object({
     nombre: z
@@ -12,11 +7,15 @@ export const createPuestoSchema = z.object({
         .min(3),
     
     sueldo: z
+        .coerce
         .number()
         .min(0, "El sueldo no puede ser negativo")
 });
 
 export type CreatePuestoType = z.infer<typeof createPuestoSchema>;
+
+export const puestoSchema = baseDtoSchema.merge(createPuestoSchema);
+export type PuestoDto = z.infer<typeof puestoSchema>;
 
 export interface PuestoFilter extends BaseFilter {
     "puesto"?: string;

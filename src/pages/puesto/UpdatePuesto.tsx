@@ -1,14 +1,14 @@
 import { ChevronLeft } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
-import { PuestoForm } from "../../components/forms/PuestoForm";
+import PuestoForm from "../../components/forms/PuestoForm";
 import { useEffect, useState } from "react";
 import { PuestoDto } from "../../lib/api/puesto/puesto.types";
 import { getPuestoById } from "../../lib/api/puesto/puesto.service";
 import Loading from "../Loading";
 import { useAuth } from "../../context/auth/useContext";
+import { toast } from "react-toastify";
 
 const UpdatePuesto = () => {
-
     const { id } = useParams<{ id: string }>();
     const { isAuth } = useAuth();
 
@@ -23,7 +23,7 @@ const UpdatePuesto = () => {
           session!.accessToken
         );
         if (!success || !data) {
-          alert(message);
+          toast.error(message);
         } else {
           setpuesto(data);
         }
