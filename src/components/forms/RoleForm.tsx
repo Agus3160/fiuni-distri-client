@@ -4,16 +4,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RoleDto, roleSchema } from "../../lib/api/rol/rol.types";
 import { createRol, updateRolById } from "../../lib/api/rol/rol.service";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   initialValues?: RoleDto;
 };
 
 const RoleForm = ({ initialValues }: Props) => {
+  const navigate = useNavigate();
   const { session } = useAuth();
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<RoleDto>({
@@ -32,7 +33,7 @@ const RoleForm = ({ initialValues }: Props) => {
 
     if (res && success) {
       toast.success(message);
-      reset();
+      navigate("/role");
     } else toast.error(message);
   };
 

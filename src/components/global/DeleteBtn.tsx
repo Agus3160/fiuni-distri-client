@@ -1,12 +1,13 @@
 import { Trash2 } from "lucide-react";
 
 type Props = {
-  onClick: () => Promise<void> | void;
+  deleteHandler: () => void;
+  title?:string
 };
 
-const DeleteBtn = ({ onClick }: Props) => {
+const DeleteBtn = ({ deleteHandler, title }: Props) => {
   return (
-    <button onClick={onClick} type="button" className="btn btn-danger">
+    <button title={title} onClick={deleteHandler} type="button" className="btn btn-danger">
       <Trash2 />
     </button>
   );

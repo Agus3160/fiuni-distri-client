@@ -28,10 +28,8 @@ const CommonsFilterBar = ({
   };
 
   const handleResetFilters = () => {
-    const newParams = new URLSearchParams(params);
-    newParams.forEach((_, key) => {
-      if (key !== "page") newParams.delete(key);
-    });
+    if(params.size === 0) return;
+    const newParams = new URLSearchParams();
     setParams(newParams);
     window.location.reload();
   };

@@ -15,6 +15,3 @@ export type RoleDto = z.infer<typeof roleSchema>;
 export interface RoleFilter extends BaseFilter {
   "rol"?: string;
 }
-
-export const updateRoleSchema = createRoleSchema.partial();
-export type UpdateRoleType = z.infer<typeof updateRoleSchema>;

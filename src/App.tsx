@@ -12,6 +12,9 @@ import CreateRole from "./pages/role/CreateRole";
 import CreatePuesto from "./pages/puesto/CreatePuesto";
 import Puesto from "./pages/puesto/Puesto";
 import UpdateRole from "./pages/role/UpdateRole";
+import User from "./pages/user/User";
+import CreateUser from "./pages/user/CreateUser";
+import UpdateUser from "./pages/user/UpdateUser";
 
 function App() {
   return (
@@ -28,10 +31,17 @@ function App() {
 
           {/* Authenticated routes */}
           <Route element={<ProtectedRoute />}>
+            
             <Route path="role/">
               <Route path="" element={<Role />} />
               <Route path="create" element={<CreateRole />} />
               <Route path="update/:id" element={<UpdateRole />} />
+            </Route>
+
+            <Route path="user/">
+              <Route path="" element={<User />} />
+              <Route path="create" element={<CreateUser />} />
+              <Route path="update/:id" element={<UpdateUser />} />
             </Route>
 
             <Route path="puestos/">
