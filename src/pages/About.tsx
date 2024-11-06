@@ -4,7 +4,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const AboutUsWithServicesAccordion: React.FC = () => {
   return (
-    <section className="bsb-about-6 py-3 py-md-5 py-xl-8">
+    <section className="bsb-about-6 py-3 py-md-5 py-xl-8 bg-dark">
       <div className="container">
         <div className="row justify-content-md-center">
           <div className="col-12 ">

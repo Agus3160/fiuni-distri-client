@@ -1,8 +1,4 @@
 
-body {
-  background-color: black;
-}
-
 .shadow {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
@@ -19,6 +15,12 @@ body {
 
 .h-full {
   min-height: calc(100vh - 56px);
+}
+
+.toast-position {
+  position: absolute;
+  top: 24px;
+  right: 24px;
 }
 
 @keyframes spin {

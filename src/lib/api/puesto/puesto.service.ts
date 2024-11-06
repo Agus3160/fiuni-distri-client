@@ -1,13 +1,12 @@
 import { api } from "../../api";
-import { PaginationResponse } from "../../definitions";
-import { mapObjectToQueryStringParams } from "../../utils";
-import { CreateRoleType, RoleDto, RoleFilter } from "./rol.types";
+import { PaginationResponse2 } from "../../definitions";
+import { CreatePuestoType, PuestoDto, PuestoFilter, UpdatePuestoType } from "./puesto.types";
 
 const tempHostUrl = "http://localhost:9091/";
 
-export const getRolById = async (id: number, accessToken: string) => {
-  return await api<RoleDto>(
-    "role/" + id,
+export const getPuestoById = async (id: number, accessToken: string) => {
+  return await api<PuestoDto>(
+    `puestos/${id}`,
     {
       method: "GET",
       headers: {
@@ -19,10 +18,9 @@ export const getRolById = async (id: number, accessToken: string) => {
   );
 };
 
-export const getRoles = async (accessToken: string, filter?: RoleFilter) => {
-  const query = mapObjectToQueryStringParams(filter);
-  return await api<PaginationResponse<RoleDto>>(
-    `role?${query}`,
+export const getPuestos = async (accessToken: string, filter?: PuestoFilter) => {
+  return await api<PaginationResponse2<PuestoDto>>(
+    `puestos`,
     {
       method: "GET",
       headers: {
@@ -34,24 +32,25 @@ export const getRoles = async (accessToken: string, filter?: RoleFilter) => {
   );
 };
 
-export const createRol = async (rol: CreateRoleType, accessToken: string) => {
-  return await api<RoleDto>(
-    "role",
+
+export const createPuesto = async (puesto: CreatePuestoType, accessToken: string) => {
+  return await api<PuestoDto>(
+    "puestos",
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify(rol),
+      body: JSON.stringify(puesto),
     },
     tempHostUrl
   );
 }
 
-export const deleteRolById = async (id: number, accessToken: string) => {
-  return await api<RoleDto>(
-    "role/" + id,
+export const deletePuestoById = async (id: number, accessToken: string) => {
+  return await api<PuestoDto>(
+    "puestos/" + id,
     {
       method: "DELETE",
       headers: {
@@ -64,17 +63,18 @@ export const deleteRolById = async (id: number, accessToken: string) => {
 }
 
 
-export const updateRolById = async (id: number, rol: RoleDto, accessToken: string) => {
-  return await api<RoleDto>(
-    "role/" + id,
+export const updatePuestoById = async (id: number, puesto: UpdatePuestoType, accessToken: string) => {
+  return await api<PuestoDto>(
+    `puestos/${id}/update`,
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify(rol),
+      body: JSON.stringify(puesto),
     },
     tempHostUrl
   );
 }
+  

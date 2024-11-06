@@ -9,6 +9,15 @@ import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import Role from "./pages/role/Role";
 import CreateRole from "./pages/role/CreateRole";
+import CreatePuesto from "./pages/puesto/CreatePuesto";
+import Puesto from "./pages/puesto/Puesto";
+import UpdateRole from "./pages/role/UpdateRole";
+import User from "./pages/user/User";
+import CreateUser from "./pages/user/CreateUser";
+import UpdateUser from "./pages/user/UpdateUser";
+import Empleado from "./pages/empleado/Empleado";
+import CreateEmpleado from "./pages/empleado/CreateEmpleado";
+import UpdatePuesto from "./pages/puesto/UpdatePuesto";
 
 function App() {
   return (
@@ -25,9 +34,30 @@ function App() {
 
           {/* Authenticated routes */}
           <Route element={<ProtectedRoute />}>
+            
             <Route path="role/">
               <Route path="" element={<Role />} />
               <Route path="create" element={<CreateRole />} />
+              <Route path="update/:id" element={<UpdateRole />} />
+            </Route>
+
+            <Route path="user/">
+              <Route path="" element={<User />} />
+              <Route path="create" element={<CreateUser />} />
+              <Route path="update/:id" element={<UpdateUser />} />
+            </Route>
+
+            <Route path="empleado/">
+              <Route path="" element={<Empleado />} />
+              <Route path="create" element={<CreateEmpleado />} />
+              {/* <Route path="update/:id" element={<UpdateUser />} /> */}
+            </Route>
+
+
+            <Route path="puestos/">
+              <Route path="" element={<Puesto />} />
+              <Route path="create" element={<CreatePuesto />} />
+              <Route path=":id/update" element={<UpdatePuesto />} />
             </Route>
           </Route>
 

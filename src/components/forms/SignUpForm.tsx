@@ -3,6 +3,7 @@ import { authSignUp } from "../../lib/auth/auth.service";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema, SignUpType } from "../../lib/auth/auth.types";
+import { toast } from "react-toastify";
 
 export default function SignUpForm() {
   const navigate = useNavigate();
@@ -16,7 +17,8 @@ export default function SignUpForm() {
 
   const onSubmit = async (data: SignUpType) => {
     const { data: session, message, success } = await authSignUp(data);
-    if (!success || !session) return alert(message);
+    if (!success || !session) return toast.error(message);
+    toast.success(message);
     navigate("/login");
   };
 

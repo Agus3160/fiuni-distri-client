@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { RoleDto, RoleFilter } from "../../lib/api/rol/rol.types";
 import { getRoles } from "../../lib/api/rol/rol.service";
 import { useAuth } from "../../context/auth/useContext";
 import Loading from "../Loading";
 import CommonsFilterBar from "../../components/global/CommonsFilterBar";
 import { mapUrlSearchParamsToObject } from "../../lib/utils";
-import RoleCard from "../../components/role/RoleCard";
 import Pagination from "../../components/global/Pagination";
 import { PaginationResponse } from "../../lib/definitions";
 import BasicSearchBar from "../../components/global/BasicSearchBar";
 import { PlusCircle } from "lucide-react";
+import RoleList from "../../components/role/RoleList";
 
 export default function Role() {
   const { isAuth } = useAuth();
 
-  const navigate = useNavigate();
   const [params] = useSearchParams();
   const [paginationRole, setPaginationRole] =
     useState<PaginationResponse<RoleDto> | null>(null);
@@ -38,14 +37,15 @@ export default function Role() {
       }
     };
     getRoleByIDEffect();
-  }, [session, navigate]);
+  }, [session]);
 
   if (isLoading) return <Loading />;
 
-  if (!paginationRole) return <div className="text-danger">Error obteniendo roles</div>;
+  if (!paginationRole)
+    return <div className="text-danger">Error obteniendo roles</div>;
 
   return (
-    <div className="w-100 pt-5 h-full bg-dark">
+    <div className="w-100 py-5 h-full bg-dark">
       <div className="container h-100 d-flex gap-3 flex-column justify-content-center ">
         <div className="d-flex justify-content-between align-items-center">
           <h2>Roles</h2>
@@ -62,15 +62,9 @@ export default function Role() {
           placeholder="Buscar por nombre de rol..."
         />
         <CommonsFilterBar />
-        {paginationRole.page.totalElements === 0
-          ? "Ningun rol fue encontrado"
-          : paginationRole.content.map((role) => (
-              <RoleCard key={role.id} role={role} />
-            ))}
+        <RoleList roles={paginationRole} setRoles={setPaginationRole} />
       </div>
-      <div className="mt-4">
-        <Pagination page={paginationRole.page} />
-      </div>
+      <Pagination page={paginationRole.page} />
     </div>
   );
 }

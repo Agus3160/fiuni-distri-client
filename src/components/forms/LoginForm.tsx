@@ -4,6 +4,7 @@ import { authLogin } from "../../lib/auth/auth.service";
 import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../context/auth/useContext";
+import { toast } from "react-toastify";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -18,8 +19,9 @@ export default function LoginForm() {
 
   const onSubmit = async (data: LoginType) => {
     const { data: session, message, success } = await authLogin(data);
-    if (!success || !session) return alert(message);
+    if (!success || !session) return toast.error(message);
     login(session);
+    toast.success(message);
     navigate("/", { replace: true });
   };
 
