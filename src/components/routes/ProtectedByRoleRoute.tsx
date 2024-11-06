@@ -12,6 +12,6 @@ export default function ProtectedByRoleRoute({ rol }: Props) {
   const session = isAuth();
   if (isLoading) return <Loading />;
   if ((!session || !validateRoles(session.roles, rol)) && !isLoading)
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/forbiden" replace />;
   return <Outlet />;
 }

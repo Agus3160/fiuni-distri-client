@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
+    "@uidotdev/usehooks": "^2.4.1",
     "bootstrap": "^5.3.3",
     "fiuni-distri-client": "file:",
     "lucide-react": "^0.454.0",

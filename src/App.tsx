@@ -15,6 +15,8 @@ import UpdateRole from "./pages/role/UpdateRole";
 import User from "./pages/user/User";
 import CreateUser from "./pages/user/CreateUser";
 import UpdateUser from "./pages/user/UpdateUser";
+import Empleado from "./pages/empleado/Empleado";
+import CreateEmpleado from "./pages/empleado/CreateEmpleado";
 
 function App() {
   return (
@@ -43,6 +45,13 @@ function App() {
               <Route path="create" element={<CreateUser />} />
               <Route path="update/:id" element={<UpdateUser />} />
             </Route>
+
+            <Route path="empleado/">
+              <Route path="" element={<Empleado />} />
+              <Route path="create" element={<CreateEmpleado />} />
+              {/* <Route path="update/:id" element={<UpdateUser />} /> */}
+            </Route>
+
 
             <Route path="puestos/">
               <Route path="" element={<Puesto />} />
