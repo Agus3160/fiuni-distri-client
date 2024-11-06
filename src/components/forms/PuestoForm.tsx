@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../context/auth/useContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PuestoDto, puestoSchema } from "../../lib/api/puesto/puesto.types";
@@ -8,6 +9,7 @@ import { toast } from "react-toastify";
 type Props = {
   initialValues?: PuestoDto;
 };
+
 
 const PuestoForm = ({ initialValues }: Props) => {
   const { session } = useAuth();
@@ -21,6 +23,17 @@ const PuestoForm = ({ initialValues }: Props) => {
     resolver: zodResolver(puestoSchema.partial()),
     defaultValues: initialValues,
   });
+
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  
+useEffect(() => {
+  if (initialValues) {
+    setIsEditMode(true);
+  } else {
+    setIsEditMode(false);
+  }
+}, [initialValues]);
 
   const onSubmit = async (data: PuestoDto) => {
     const {
@@ -64,7 +77,7 @@ const PuestoForm = ({ initialValues }: Props) => {
           type="number"
           id="sueldo"
           autoComplete="off"
-          placeholder="Escriba la cantidad del sueldo"
+          placeholder="0"
           className={`form-control ${errors.sueldo ? "is-invalid" : ""}`}
         />
         {errors.nombre && (
@@ -78,7 +91,7 @@ const PuestoForm = ({ initialValues }: Props) => {
           type="submit"
           className="btn w-100 btn-primary"
         >
-          Crear
+          {isEditMode ? 'Actualizar' : 'Crear'}
         </button>
       </div>
     </form>

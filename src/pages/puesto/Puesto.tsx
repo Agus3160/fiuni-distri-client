@@ -7,18 +7,18 @@ import Loading from "../Loading";
 import CommonsFilterBar from "../../components/global/CommonsFilterBar";
 import { mapUrlSearchParamsToObject } from "../../lib/utils";
 import PuestoCard from "../../components/puesto/PuestoCard";
-import Pagination from "../../components/global/Pagination";
-import { PaginationResponse } from "../../lib/definitions";
+import { PaginationResponse2 } from "../../lib/definitions";
 import BasicSearchBar from "../../components/global/BasicSearchBar";
 import { PlusCircle } from "lucide-react";
+
 
 export default function Puesto(){
     const { isAuth } = useAuth();
 
-    const navigate = useNavigate();
+    const navigate = useNavigate();``
     const [params] = useSearchParams();
     const [paginationPuesto, setPaginationPuesto] = 
-      useState<PaginationResponse<PuestoDto> | null>(null);
+      useState<PaginationResponse2<PuestoDto> | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     const session = isAuth();
@@ -30,6 +30,9 @@ export default function Puesto(){
             session!.accessToken,
             puestoFilterObj
           );
+
+          
+
           if (!success || !data) {
             alert(message);
           } else {
@@ -63,7 +66,8 @@ export default function Puesto(){
               placeholder="Buscar por nombre de puesto..."
             />
             <CommonsFilterBar />
-            {paginationPuesto.page.totalElements === 0
+            
+            {paginationPuesto.totalElements === 0
               ? "Ningun puesto fue encontrado"
               : paginationPuesto.content.map((p) => (
                   <PuestoCard
@@ -73,9 +77,6 @@ export default function Puesto(){
                     puesto={p}
                     />
                 ))}
-          </div>
-          <div className="mt-4">
-            <Pagination page={paginationPuesto.page} />
           </div>
         </div>
       );

@@ -25,6 +25,20 @@ export interface PaginationResponse<T> {
   page: PageProps;
 }
 
+export interface PaginationResponse2<T> {
+  content: T[];
+  empty: boolean;
+  first: boolean;
+  last : boolean;
+  number: number;
+  numberOfElements: number;
+  pageable: string;
+  size: number;
+  sort: {};
+  totalElements: number;
+  totalPages: number;
+}
+
 export interface BaseFilter {
   page?: number;
   size?: number;

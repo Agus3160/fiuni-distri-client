@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import { deletePuestoById } from "../../lib/api/puesto/puesto.service";
 import { useAuth } from "../../context/auth/useContext";
 import { toast } from "react-toastify";
-import { PaginationResponse } from "../../lib/definitions";
+import { PaginationResponse2 } from "../../lib/definitions";
 
 type Props = {
     puesto: PuestoDto;
-    paginationPuesto: PaginationResponse<PuestoDto>;
-    setPaginationPuesto: (data: PaginationResponse<PuestoDto>) => void;
+    paginationPuesto: PaginationResponse2<PuestoDto>;
+    setPaginationPuesto: (data: PaginationResponse2<PuestoDto>) => void;
 }
 
 const PuestoCard = ({ puesto, setPaginationPuesto, paginationPuesto }: Props) => {
@@ -31,10 +31,11 @@ const PuestoCard = ({ puesto, setPaginationPuesto, paginationPuesto }: Props) =>
     <div className="d-flex flex-column shadow bg-light-subtle rounded p-3">
       <div className="d-flex justify-content-between align-items-center">
         <h3 className="m-0">{puesto.nombre}</h3>
+        <h3 className="m-0">{puesto.sueldo}</h3>
         <div className="d-flex align-items-center gap-2">
           <Link
             title="Editar Puesto"
-            to={`/puestos/update/${puesto.id}`}
+            to={`/puestos/${puesto.id}/update`}
             className="btn btn-primary"
           >
             <Edit />
