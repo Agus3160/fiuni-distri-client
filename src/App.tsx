@@ -58,6 +58,7 @@ function App() {
               <Route path="" element={<Puesto />} />
               <Route path="create" element={<CreatePuesto />} />
               <Route path=":id/update" element={<UpdatePuesto />} />
+              <Route path="buscar=:string" element={<Puesto />} />
             </Route>
           </Route>
 

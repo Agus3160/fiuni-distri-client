@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
 import { useAuth } from "../../context/auth/useContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PuestoDto, puestoSchema } from "../../lib/api/puesto/puesto.types";
@@ -24,17 +23,6 @@ const PuestoForm = ({ initialValues }: Props) => {
     resolver: zodResolver(puestoSchema.partial()),
     defaultValues: initialValues,
   });
-
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  
-useEffect(() => {
-  if (initialValues) {
-    setIsEditMode(true);
-  } else {
-    setIsEditMode(false);
-  }
-}, [initialValues]);
 
   const onSubmit = async (data: PuestoDto) => {
     const {
@@ -92,7 +80,7 @@ useEffect(() => {
           type="submit"
           className="btn w-100 btn-primary"
         >
-          {isEditMode ? 'Actualizar' : 'Crear'}
+          {initialValues ? 'Actualizar' : 'Crear'}
         </button>
       </div>
     </form>

@@ -1,3 +1,4 @@
+import { string } from "zod";
 import { api } from "../../api";
 import { PaginationResponse2 } from "../../definitions";
 import { mapObjectToQueryStringParams } from "../../utils";
@@ -22,7 +23,7 @@ export const getPuestoById = async (id: number, accessToken: string) => {
 export const getPuestos = async (accessToken: string, filter?: PuestoFilter) => {
   const query = mapObjectToQueryStringParams(filter);
   return await api<PaginationResponse2<PuestoDto>>(
-    `puestos?${query}`,
+    `puestos/${query}`,
     {
       method: "GET",
       headers: {

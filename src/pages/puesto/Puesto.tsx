@@ -62,7 +62,7 @@ export default function Puesto(){
               </Link>
             </div>
             <BasicSearchBar
-              paramKey="puesto"
+              paramKey="buscar"
               placeholder="Buscar por nombre de puesto..."
             />
             <CommonsFilterBar />
