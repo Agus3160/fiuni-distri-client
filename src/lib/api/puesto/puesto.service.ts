@@ -1,6 +1,7 @@
 import { api } from "../../api";
 import { PaginationResponse2 } from "../../definitions";
-import { CreatePuestoType, PuestoDto, PuestoFilter, UpdatePuestoType } from "./puesto.types";
+import { mapObjectToQueryStringParams } from "../../utils";
+import { CreatePuestoType, PuestoDto, PuestoFilter } from "./puesto.types";
 
 const tempHostUrl = "http://localhost:9091/";
 
@@ -19,8 +20,9 @@ export const getPuestoById = async (id: number, accessToken: string) => {
 };
 
 export const getPuestos = async (accessToken: string, filter?: PuestoFilter) => {
+  const query = mapObjectToQueryStringParams(filter);
   return await api<PaginationResponse2<PuestoDto>>(
-    `puestos`,
+    `puestos?${query}`,
     {
       method: "GET",
       headers: {
@@ -63,7 +65,7 @@ export const deletePuestoById = async (id: number, accessToken: string) => {
 }
 
 
-export const updatePuestoById = async (id: number, puesto: UpdatePuestoType, accessToken: string) => {
+export const updatePuestoById = async (id: number, puesto: PuestoDto, accessToken: string) => {
   return await api<PuestoDto>(
     `puestos/${id}/update`,
     {

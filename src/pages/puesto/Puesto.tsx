@@ -6,10 +6,10 @@ import { useAuth } from "../../context/auth/useContext";
 import Loading from "../Loading";
 import CommonsFilterBar from "../../components/global/CommonsFilterBar";
 import { mapUrlSearchParamsToObject } from "../../lib/utils";
-import PuestoCard from "../../components/puesto/PuestoCard";
 import { PaginationResponse2 } from "../../lib/definitions";
 import BasicSearchBar from "../../components/global/BasicSearchBar";
 import { PlusCircle } from "lucide-react";
+import PuestoList from "../../components/puesto/PuestoList";
 
 
 export default function Puesto(){
@@ -67,16 +67,7 @@ export default function Puesto(){
             />
             <CommonsFilterBar />
             
-            {paginationPuesto.totalElements === 0
-              ? "Ningun puesto fue encontrado"
-              : paginationPuesto.content.map((p) => (
-                  <PuestoCard
-                    setPaginationPuesto={setPaginationPuesto}
-                    paginationPuesto={paginationPuesto}
-                    key={p.id}
-                    puesto={p}
-                    />
-                ))}
+            <PuestoList puestos={paginationPuesto} setPuestos={setPaginationPuesto}/>
           </div>
         </div>
       );

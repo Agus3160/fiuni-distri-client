@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PuestoDto, puestoSchema } from "../../lib/api/puesto/puesto.types";
 import { createPuesto, updatePuestoById } from "../../lib/api/puesto/puesto.service";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   initialValues?: PuestoDto;
@@ -12,11 +13,11 @@ type Props = {
 
 
 const PuestoForm = ({ initialValues }: Props) => {
+  const navigate = useNavigate();
   const { session } = useAuth();
 
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<PuestoDto>({
@@ -46,7 +47,7 @@ useEffect(() => {
 
     if (res && success) {
       toast.success(message);
-      reset();
+      navigate("/puestos");
     } else toast.error(message);
   };
 

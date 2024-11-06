@@ -21,5 +21,5 @@ export interface PuestoFilter extends BaseFilter {
     "puesto"?: string;
 }
 
-export const updatePuestoSchema = createPuestoSchema.partial();
-export type UpdatePuestoType = z.infer<typeof updatePuestoSchema>;
+//export const updatePuestoSchema = createPuestoSchema.partial();
+//export type UpdatePuestoType = z.infer<typeof updatePuestoSchema>;
