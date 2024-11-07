@@ -4,7 +4,7 @@ import { baseDtoSchema, BaseFilter } from "../../definitions";
 export const createPuestoSchema = z.object({
     nombre: z
         .string()
-        .min(3),
+        .min(3, "El nombre debe tener al menos 3 caracteres"),
     
     sueldo: z
         .coerce
@@ -21,5 +21,5 @@ export interface PuestoFilter extends BaseFilter {
     "puesto"?: string;
 }
 
-//export const updatePuestoSchema = createPuestoSchema.partial();
+export const updatePuestoSchema = createPuestoSchema.partial();
 //export type UpdatePuestoType = z.infer<typeof updatePuestoSchema>;

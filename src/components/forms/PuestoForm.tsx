@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/auth/useContext";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PuestoDto, puestoSchema } from "../../lib/api/puesto/puesto.types";
+import { PuestoDto, updatePuestoSchema, createPuestoSchema } from "../../lib/api/puesto/puesto.types";
 import { createPuesto, updatePuestoById } from "../../lib/api/puesto/puesto.service";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -15,12 +15,14 @@ const PuestoForm = ({ initialValues }: Props) => {
   const navigate = useNavigate();
   const { session } = useAuth();
 
+  const schema = initialValues ? updatePuestoSchema : createPuestoSchema;
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<PuestoDto>({
-    resolver: zodResolver(puestoSchema.partial()),
+    resolver: zodResolver(schema),
     defaultValues: initialValues,
   });
 
