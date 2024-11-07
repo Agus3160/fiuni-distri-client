@@ -16,8 +16,8 @@ export default function SignUpForm() {
   });
 
   const onSubmit = async (data: SignUpType) => {
-    const { data: session, message, success } = await authSignUp(data);
-    if (!success || !session) return toast.error(message);
+    const { message, success } = await authSignUp(data);
+    if (!success ) return toast.error(message);
     toast.success(message);
     navigate("/login");
   };

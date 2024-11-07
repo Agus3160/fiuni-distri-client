@@ -18,8 +18,9 @@ import UpdateUser from "./pages/user/UpdateUser";
 import Empleado from "./pages/empleado/Empleado";
 import CreateEmpleado from "./pages/empleado/CreateEmpleado";
 import UpdatePuesto from "./pages/puesto/UpdatePuesto";
-import EmpleadoDetalles from "./pages/empleado/EmpleadoDetalles";
-import EditarEmpleado from "./pages/empleado/EditarEmpleado";
+import Beneficio from "./pages/beneficio/beneficio";
+import CreateBeneficio from "./pages/beneficio/CreateBeneficio";
+import UpdateBeneficio from "./pages/beneficio/UpdateBeneficio";
 
 function App() {
   return (
@@ -63,6 +64,14 @@ function App() {
               <Route path=":id/update" element={<UpdatePuesto />} />
               <Route path="buscar=:string" element={<Puesto />} />
             </Route>
+
+            <Route path="beneficio/">
+              <Route path="" element={<Beneficio />} />
+              <Route path="create" element={<CreateBeneficio />} />
+              <Route path=":id/update" element={<UpdateBeneficio />} />
+              <Route path="buscar=:string" element={<Beneficio />} />
+            </Route>
+
           </Route>
 
           {/* Authorized routes */}
