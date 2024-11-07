@@ -66,3 +66,18 @@ export const createEmpleado = async (empleado:CreateEmpleadoDto, accessToken:str
     tempHostUrl
   );
 }
+
+export const updateEmpleado = async (empleado:CreateEmpleadoDto, accessToken:string) => {
+  return await api<EmpleadoDto>(
+    "empleado",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(empleado)
+    },
+    tempHostUrl
+  );
+}

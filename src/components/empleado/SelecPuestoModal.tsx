@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
 import { EmpleadoDto } from "../../lib/api/empleado/empleado.types";
 import CustomModal from "../global/CustomModal";
-import { UserDto } from "../../lib/api/user/user.types";
 import { useDebounce } from "@uidotdev/usehooks";
-import { getAllUsers } from "../../lib/api/user/user.service";
 import { useAuth } from "../../context/auth/useContext";
+import { getPuestos } from "../../lib/api/puesto/puesto.service";
+import { PuestoDto } from "../../lib/api/puesto/puesto.types";
 
 type Props = {
   display: boolean;
@@ -16,7 +16,7 @@ type Props = {
 const SelectPuestoModal = ({ display, setDisplay, setValue }: Props) => {
   const { session } = useAuth();
   const [query, setQuery] = useState("");
-  const [users, setUsers] = useState<UserDto[]>([]);
+  const [users, setUsers] = useState<PuestoDto[]>([]);
   const debouncedQuery = useDebounce(query, 500);
 
   if (!display) return null;
@@ -31,8 +31,8 @@ const SelectPuestoModal = ({ display, setDisplay, setValue }: Props) => {
 
   useEffect(() => {
     const getUsers = async () => {
-      const { data } = await getAllUsers(session!.accessToken, {
-        username: debouncedQuery,
+      const { data } = await getPuestos(session!.accessToken, {
+        puesto: debouncedQuery,
       });
       setUsers(data.content);
     };
@@ -61,7 +61,7 @@ const SelectPuestoModal = ({ display, setDisplay, setValue }: Props) => {
                 onClick={onSubmitHandler(user.id)}
                 key={user.id}
               >
-                ID:{user.id}-{user.username}
+                ID:{user.id}-{user.nombre}
               </button>
             ))}
         </div>
