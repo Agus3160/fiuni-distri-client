@@ -22,7 +22,7 @@ export const getPuestoById = async (id: number, accessToken: string) => {
 export const getPuestos = async (accessToken: string, filter?: PuestoFilter) => {
   const query = mapObjectToQueryStringParams(filter);
   return await api<PaginationResponse2<PuestoDto>>(
-    `puestos?${query}`,
+    `puestos/${query}`,
     {
       method: "GET",
       headers: {
