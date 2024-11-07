@@ -21,6 +21,8 @@ import UpdatePuesto from "./pages/puesto/UpdatePuesto";
 import Beneficio from "./pages/beneficio/beneficio";
 import CreateBeneficio from "./pages/beneficio/CreateBeneficio";
 import UpdateBeneficio from "./pages/beneficio/UpdateBeneficio";
+import EmpleadoDetalles from "./pages/empleado/EmpleadoDetalles";
+import EditarEmpleado from "./pages/empleado/EditarEmpleado";
 
 function App() {
   return (
