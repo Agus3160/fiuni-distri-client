@@ -1,4 +1,4 @@
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, ExternalLink, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { EmpleadoDto } from "../../lib/api/empleado/empleado.types";
 import Modal from "../global/Modal";
@@ -37,6 +37,14 @@ const EmpleadoCard = ({ empleado, handleDelete }: Props) => {
         <div className="d-flex justify-content-between align-items-center">
           <h3 className="m-0">{empleado.nombre}</h3>
           <div className="d-flex align-items-center gap-2">
+            <Link
+              title="Ver Empleado"
+              target="_blank"
+              to={`/empleado/${empleado.id}`}
+              className="btn btn-success"
+            >
+              <ExternalLink />
+            </Link>
             <Link
               title="Editar Empleado"
               to={`/empleado/update/${empleado.id}`}

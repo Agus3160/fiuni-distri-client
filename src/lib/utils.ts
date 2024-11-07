@@ -32,3 +32,9 @@ export const getVisiblePages = (
   const end = Math.min(totalPages, start + visiblePages - 1);
   return pages.slice(start - 1, end);
 };
+
+export const numberFormatter = new Intl.NumberFormat('es-ES', {
+  style: 'decimal',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+})

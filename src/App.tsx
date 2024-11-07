@@ -18,6 +18,8 @@ import UpdateUser from "./pages/user/UpdateUser";
 import Empleado from "./pages/empleado/Empleado";
 import CreateEmpleado from "./pages/empleado/CreateEmpleado";
 import UpdatePuesto from "./pages/puesto/UpdatePuesto";
+import EmpleadoDetalles from "./pages/empleado/EmpleadoDetalles";
+import EditarEmpleado from "./pages/empleado/EditarEmpleado";
 
 function App() {
   return (
@@ -50,7 +52,8 @@ function App() {
             <Route path="empleado/">
               <Route path="" element={<Empleado />} />
               <Route path="create" element={<CreateEmpleado />} />
-              {/* <Route path="update/:id" element={<UpdateUser />} /> */}
+              <Route path=":id" element={<EmpleadoDetalles />} />
+              <Route path="update/:id" element={<EditarEmpleado />} />
             </Route>
 
 

@@ -8,10 +8,16 @@ import {
   EmpleadoDto,
   empleadoSchema,
 } from "../../lib/api/empleado/empleado.types";
-import { createEmpleado } from "../../lib/api/empleado/empleado.service";
+import {
+  createEmpleado,
+  updateEmpleado,
+} from "../../lib/api/empleado/empleado.service";
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SelectUserModal from "../empleado/SelectUserModal";
+import SelectPuestoModal from "../empleado/SelecPuestoModal";
+import { getUserById } from "../../lib/api/user/user.service";
+import { getPuestoById } from "../../lib/api/puesto/puesto.service";
 
 type Props = {
   initialValues?: EmpleadoDto;
@@ -24,24 +30,55 @@ const EmpleadoForm = ({ initialValues }: Props) => {
     register,
     handleSubmit,
     setValue,
-    getValues,
     formState: { errors, isSubmitting },
   } = useForm<EmpleadoDto>({
+    defaultValues: initialValues,
     resolver: zodResolver(empleadoSchema.partial()),
   });
 
   const [displaySearchUserModal, setDisplaySearchUserModal] = useState(false);
+  const [displaySearchPuestoModal, setDisplaySearchPuestoModal] =
+    useState(false);
+
+  // SELECTED USER & PUESTO
+  const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [selectedPuesto, setSelectedPuesto] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!initialValues) return;
+
+    const fetchInitialValues = async () => {
+      const { data } = await getUserById(
+        initialValues.id,
+        session!.accessToken
+      );
+      const { data: puesto } = await getPuestoById(
+        initialValues.puesto_id,
+        session!.accessToken
+      );
+      if (!data || !puesto) {
+        navigate("/empleado");
+        toast.error("Error al cargar los datos del empleado");
+      }
+      setSelectedPuesto(puesto.nombre);
+      setSelectedUser(data.username);
+    };
+
+    fetchInitialValues();
+  }, [initialValues]);
 
   const onSubmit = async (data: CreateEmpleadoDto) => {
     const {
       data: res,
       message,
       success,
-    } = await createEmpleado(data, session!.accessToken);
+    } = initialValues
+      ? await updateEmpleado(initialValues.id, data, session!.accessToken)
+      : await createEmpleado(data, session!.accessToken);
 
     if (res && success) {
       toast.success(message);
-      navigate("/user");
+      navigate("/empleado");
     } else toast.error(message);
   };
 
@@ -49,8 +86,18 @@ const EmpleadoForm = ({ initialValues }: Props) => {
     <>
       {displaySearchUserModal && (
         <SelectUserModal
+          setSelectedUser={setSelectedUser}
           display={displaySearchUserModal}
           setDisplay={setDisplaySearchUserModal}
+          setValue={setValue}
+        />
+      )}
+
+      {displaySearchPuestoModal && (
+        <SelectPuestoModal
+          setSelectedPuesto={setSelectedPuesto}
+          display={displaySearchPuestoModal}
+          setDisplay={setDisplaySearchPuestoModal}
           setValue={setValue}
         />
       )}
@@ -81,7 +128,7 @@ const EmpleadoForm = ({ initialValues }: Props) => {
             type="text"
             id="ci"
             autoComplete="off"
-            placeholder="example@test.com"
+            placeholder="12345678-9"
             className={`form-control ${errors.ci ? "is-invalid" : ""}`}
           />
           {errors.ci && (
@@ -93,10 +140,11 @@ const EmpleadoForm = ({ initialValues }: Props) => {
           <label htmlFor="puesto">Puesto:</label>
           <div className="d-flex gap-2">
             <input
+              id="puesto"
               className="form-control"
               value={
-                getValues("puesto_id")
-                  ? `ID - ${getValues("puesto_id")}`
+                selectedPuesto
+                  ? `Puesto - ${selectedPuesto}`
                   : "Selecciona un puesto"
               }
               disabled={true}
@@ -105,7 +153,7 @@ const EmpleadoForm = ({ initialValues }: Props) => {
               type="button"
               title="Buscar un puesto para asignarlo al empleado"
               className="btn btn-sm btn-primary"
-              onClick={() => setDisplaySearchUserModal(true)}
+              onClick={() => setDisplaySearchPuestoModal(true)}
             >
               <Search size={18} />
             </button>
@@ -119,10 +167,11 @@ const EmpleadoForm = ({ initialValues }: Props) => {
           <label htmlFor="user">Usuario:</label>
           <div className="d-flex gap-2">
             <input
+              id="user"
               className="form-control"
               value={
-                getValues("user_id")
-                  ? `ID - ${getValues("user_id")}`
+                selectedUser
+                  ? `Usuario - ${selectedUser}`
                   : "Selecciona un usuario"
               }
               disabled={true}

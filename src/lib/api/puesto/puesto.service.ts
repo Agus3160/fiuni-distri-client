@@ -3,7 +3,7 @@ import { PaginationResponse2 } from "../../definitions";
 import { mapObjectToQueryStringParams } from "../../utils";
 import { CreatePuestoType, PuestoDto, PuestoFilter } from "./puesto.types";
 
-const tempHostUrl = "http://localhost:9091/";
+const tempHostUrl = "http://localhost:9092/";
 
 export const getPuestoById = async (id: number, accessToken: string) => {
   return await api<PuestoDto>(

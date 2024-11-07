@@ -67,11 +67,11 @@ export const createEmpleado = async (empleado:CreateEmpleadoDto, accessToken:str
   );
 }
 
-export const updateEmpleado = async (empleado:CreateEmpleadoDto, accessToken:string) => {
+export const updateEmpleado = async (id:number, empleado:CreateEmpleadoDto, accessToken:string) => {
   return await api<EmpleadoDto>(
-    "empleado",
+    "empleado/"+id,
     {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,

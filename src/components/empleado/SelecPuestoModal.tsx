@@ -11,9 +11,10 @@ type Props = {
   display: boolean;
   setDisplay: (value: boolean) => void;
   setValue: UseFormSetValue<EmpleadoDto>;
+  setSelectedPuesto: (data: string | null) => void;
 };
 
-const SelectPuestoModal = ({ display, setDisplay, setValue }: Props) => {
+const SelectPuestoModal = ({ display, setDisplay, setValue, setSelectedPuesto }: Props) => {
   const { session } = useAuth();
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState<PuestoDto[]>([]);
@@ -22,9 +23,10 @@ const SelectPuestoModal = ({ display, setDisplay, setValue }: Props) => {
   if (!display) return null;
 
   const onCloseHanlder = () => setDisplay(false);
-  const onSubmitHandler = (id: number) => {
+  const onSubmitHandler = (id: number, nombre: string) => {
     return () => {
-      setValue("user_id", id, { shouldValidate: true });
+      setSelectedPuesto(nombre);
+      setValue("puesto_id", id, { shouldValidate: true });
       setDisplay(false);
     };
   };
@@ -32,8 +34,8 @@ const SelectPuestoModal = ({ display, setDisplay, setValue }: Props) => {
   useEffect(() => {
     const getUsers = async () => {
       const { data } = await getPuestos(session!.accessToken, {
-        puesto: debouncedQuery,
-      });
+        "buscar": debouncedQuery,
+      } as any);
       setUsers(data.content);
     };
     getUsers();
@@ -41,7 +43,7 @@ const SelectPuestoModal = ({ display, setDisplay, setValue }: Props) => {
 
   return (
     <CustomModal
-      title="Seleccione un usuario"
+      title="Seleccione un Puesto"
       type="primary"
       onClose={onCloseHanlder}
     >
@@ -54,14 +56,14 @@ const SelectPuestoModal = ({ display, setDisplay, setValue }: Props) => {
         />
         <div className="d-flex flex-column gap-2">
           {users.length > 0 &&
-            users.map((user) => (
+            users.map((puesto) => (
               <button
                 className="btn btn-outline-primary btn-sm text-start"
                 type="button"
-                onClick={onSubmitHandler(user.id)}
-                key={user.id}
+                onClick={onSubmitHandler(puesto.id, puesto.nombre)}
+                key={puesto.id}
               >
-                ID:{user.id}-{user.nombre}
+                {puesto.nombre}
               </button>
             ))}
         </div>

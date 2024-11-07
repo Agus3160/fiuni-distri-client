@@ -11,9 +11,10 @@ type Props = {
   display: boolean;
   setDisplay: (value: boolean) => void;
   setValue: UseFormSetValue<EmpleadoDto>;
+  setSelectedUser: (data:string|null) => void;
 };
 
-const SelectUserModal = ({ display, setDisplay, setValue }: Props) => {
+const SelectUserModal = ({ display, setDisplay, setValue, setSelectedUser }: Props) => {
   const { session } = useAuth();
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState<UserDto[]>([]);
@@ -22,8 +23,9 @@ const SelectUserModal = ({ display, setDisplay, setValue }: Props) => {
   if (!display) return null;
 
   const onCloseHanlder = () => setDisplay(false);
-  const onSubmitHandler = (id: number) => {
+  const onSubmitHandler = (id: number, username: string) => {
     return () => {
+      setSelectedUser(username);
       setValue("user_id", id, { shouldValidate: true });
       setDisplay(false);
     };
@@ -58,10 +60,10 @@ const SelectUserModal = ({ display, setDisplay, setValue }: Props) => {
               <button
                 className="btn btn-outline-primary btn-sm text-start"
                 type="button"
-                onClick={onSubmitHandler(user.id)}
+                onClick={onSubmitHandler(user.id, user.username)}
                 key={user.id}
               >
-                ID:{user.id}-{user.username}
+                {user.username}
               </button>
             ))}
         </div>
