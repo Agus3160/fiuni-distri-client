@@ -1,5 +1,6 @@
-import { ChevronLeft, Link } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import VacanteDetalleForm from "../../components/forms/VacanteDetalleForm";
+import { Link } from "react-router-dom";
 
 
 const CreateVacanteDetalle = () => {
