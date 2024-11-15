@@ -25,23 +25,22 @@ const VacanteDetalleForm = ({ initialValues }: Props) => {
     const [vacante, setVacante] = useState<VacanteDto>();
     const [isLoading, setIsLoading] = useState(true);
 
-    const [showModal, setShowModal] = useState(false); // Control del modal
+    const [showModal, setShowModal] = useState(false); 
 
-  // Función para abrir y cerrar el modal
+
   const toggleModal = () => setShowModal(!showModal);
 
-  // Redirigir a la página de creación de detalles de la vacante
   const agregarDetalles = () => {
     reset();
     navigate(`/vacantes/${id}/detalles/create`);
     
-    setShowModal(false); // Cerrar el modal
+    setShowModal(false); 
   };
 
-  // Redirigir a la página de detalles de la vacante
+
   const noAgregarDetalles = () => {
     navigate(`/vacantes/${id}/detalles`);
-    setShowModal(false); // Cerrar el modal
+    setShowModal(false); 
   };
 
 
@@ -75,7 +74,7 @@ const VacanteDetalleForm = ({ initialValues }: Props) => {
         if (!initialValues) return;
 
         const fetchInitialValues = async () => {
-            const { data } = await getEmpleadoById(initialValues.engargado_id, session!.accessToken);
+            const { data } = await getEmpleadoById(initialValues.encargado_id, session!.accessToken);
             if (!data) {
                 navigate("vacantes/" + id + "/detalles");
                 toast.error("Error al cargar los datos del detalle de la vacante");
@@ -128,7 +127,10 @@ const VacanteDetalleForm = ({ initialValues }: Props) => {
         if (res && success) {
             toast.success(message);
 
-            setShowModal(true);
+            if (!initialValues) {
+                setShowModal(true);
+            }
+            navigate("/vacantes/"+ id +"/detalles")
         } else {
             toast.error(message);
         }
@@ -196,7 +198,7 @@ const VacanteDetalleForm = ({ initialValues }: Props) => {
                     <label htmlFor="encargado">Encargado:</label>
                     <div className="d-flex gap-1">
                         <input
-                            {...register("engargado_id")}
+                            {...register("encargado_id")}
                             id="encargado"
                             className="form-control"
                             value={selectedEncargado ? `Encargado - ${selectedEncargado}` : "Seleccione un encargado"}
@@ -212,7 +214,7 @@ const VacanteDetalleForm = ({ initialValues }: Props) => {
                             <Search size={18} />
                         </button>
                     </div>
-                    {errors.engargado_id && <div className="invalid-feedback">{errors.engargado_id.message}</div>}
+                    {errors.encargado_id && <div className="invalid-feedback">{errors.encargado_id.message}</div>}
                 </div>
 
                 <div>

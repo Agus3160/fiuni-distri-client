@@ -27,7 +27,7 @@ const SelectEncargadoInVacanteDetallesModal = ({ display, setDisplay, setValue, 
     const onSubmitHandler = (id: number, nombre: string) =>{
         return () => {
             setSelectedEncargado(nombre);
-            setValue("engargado_id", id, {shouldValidate: true});
+            setValue("encargado_id", id, {shouldValidate: true});
             setDisplay(false);
         };
     };

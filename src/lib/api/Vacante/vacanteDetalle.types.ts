@@ -2,7 +2,7 @@ import { z } from "zod"
 import { baseDtoSchema } from "../../definitions";
 
 export const vacanteDetalleSchema = z.object({
-    engargado_id: z.number(),
+    encargado_id: z.number(),
     vacante_id: z.number(),
     fue_revisado: z.boolean(),
     cv: z.string(),

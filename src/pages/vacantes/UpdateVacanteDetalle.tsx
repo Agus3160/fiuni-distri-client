@@ -1,8 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../context/auth/useContext";
 import { useEffect, useState } from "react";
-import { VacanteDto } from "../../lib/api/Vacante/vacante.types";
-import { getVacanteById } from "../../lib/api/Vacante/Vacante.service";
 import { toast } from "react-toastify";
 import Loading from "../Loading";
 import { VacanteDetalleDto } from "../../lib/api/Vacante/vacanteDetalle.types";
@@ -14,21 +12,20 @@ import { getVacanteDetalleById } from "../../lib/api/Vacante/VacanteDetalle.serv
 
 
 const UpdateVacanteDetalle = () => {
-    const { id } = useParams<{id: string}>();
+    const { id, id_detalle } = useParams<{id: string, id_detalle: string}>();
     const { isAuth } = useAuth();
 
     const session = isAuth();
     const [loading, setLoading] = useState(true);
 
-    const [vacante, setVacante] = useState<VacanteDto | null>(null);
 
     const [vacanteDetalle, setVacanteDetalle] = useState<VacanteDetalleDto | null>(null);
 
 
     const getVacanteDetalleByIDEffect = async () => {
         const { data, message, success } = await getVacanteDetalleById(
-          vacante!.id,
           Number(id),
+          Number(id_detalle),
           session!.accessToken
         );
         if (!success || !data) {
@@ -68,9 +65,6 @@ const UpdateVacanteDetalle = () => {
           </div>
         </div>
         );
-    
-    
-
 
 };
 

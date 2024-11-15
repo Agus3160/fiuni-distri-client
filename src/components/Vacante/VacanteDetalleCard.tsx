@@ -61,7 +61,7 @@ const VacanteDetalleCard = ({vacanteDetalle, paginationVacanteDetalle, setPagina
       useEffect(() => {
         const fetchEncargado = async () => {
           try {
-            const { data } = await getEmpleadoById(vacanteDetalle.engargado_id, session!.accessToken);
+            const { data } = await getEmpleadoById(vacanteDetalle.encargado_id, session!.accessToken);
             if (data) {
               setEncargado(data.nombre); 
             } else {
@@ -74,7 +74,7 @@ const VacanteDetalleCard = ({vacanteDetalle, paginationVacanteDetalle, setPagina
         };
 
         fetchEncargado();
-  }, [vacanteDetalle.engargado_id, session]);
+  }, [vacanteDetalle.encargado_id, session]);
 
 
 
@@ -105,7 +105,7 @@ const VacanteDetalleCard = ({vacanteDetalle, paginationVacanteDetalle, setPagina
 
                     <Link
                         title="Editar Vacante"
-                        to={`/vacantes/${vacante!.id}/detalles/${vacanteDetalle.id}/update`}
+                        to={`/vacantes/${id}/detalles/${vacanteDetalle.id}/update`}
                         className="btn btn-primary"
                     >
                     <Edit />
@@ -120,7 +120,7 @@ const VacanteDetalleCard = ({vacanteDetalle, paginationVacanteDetalle, setPagina
                     </button>
                 </div>
             </div>
-
+            <h4 className="m-0">CV: {vacanteDetalle.cv || "Cargando CV..."}</h4>
             <hr className="h-1"></hr>
             <h2>Fue Revisado: {vacanteDetalle.fue_revisado ? 'Si' : 'No'}</h2>
             <p className="text-xs text-secondary text-end">

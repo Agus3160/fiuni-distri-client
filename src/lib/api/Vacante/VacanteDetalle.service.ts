@@ -38,11 +38,11 @@ export const createVacanteDetalle = async (vacanteDetalle: CreateVacanteDetalleT
 
 export const updateVacanteDetalle = async (id: number,vacanteDetalle: VacanteDetalleDto, id_cabecera: number, accessToken: string) => {
     return await api<VacanteDetalleDto>(
-        `/vacantes/${id_cabecera}/aplicacionVacante/${id}`,
+        `vacantes/${id_cabecera}/aplicacionVacante/${id}`,
         {
             method: "PUT",
             headers: {
-                "Content-type": "applicacion/json",
+                "Content-type": "application/json",
                 Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify(vacanteDetalle),
@@ -53,7 +53,7 @@ export const updateVacanteDetalle = async (id: number,vacanteDetalle: VacanteDet
 
 export const deleteVacanteDetalleById = async (id: number, id_cabecera: number, accessToken: string) => {
     return await api<VacanteDetalleDto>(
-        `/vacantes/${id_cabecera}/aplicacionVacante/${id}`,
+        `vacantes/${id_cabecera}/aplicacionVacante/${id}`,
         {
             method: "DELETE",
             headers: {
