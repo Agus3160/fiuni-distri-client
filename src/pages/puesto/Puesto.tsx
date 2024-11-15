@@ -15,7 +15,7 @@ import PuestoList from "../../components/puesto/PuestoList";
 export default function Puesto(){
     const { isAuth } = useAuth();
 
-    const navigate = useNavigate();``
+    const navigate = useNavigate();
     const [params] = useSearchParams();
     const [paginationPuesto, setPaginationPuesto] = 
       useState<PaginationResponse2<PuestoDto> | null>(null);

@@ -49,6 +49,12 @@ export const navLinks: NavLink[] = [
     //role:"USER"
   },
   {
+    url:"vacantes",
+	  name:"Vacantes",
+    auth:"auth",
+    role:"USER"
+  },
+  {
     url:"about",
     name:"About",
     auth:"both"

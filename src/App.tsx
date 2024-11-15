@@ -23,6 +23,12 @@ import CreateBeneficio from "./pages/beneficio/CreateBeneficio";
 import UpdateBeneficio from "./pages/beneficio/UpdateBeneficio";
 import EmpleadoDetalles from "./pages/empleado/EmpleadoDetalles";
 import EditarEmpleado from "./pages/empleado/EditarEmpleado";
+import CreateVacante from "./pages/vacantes/CreateVacante";
+import Vacante from "./pages/vacantes/Vacante";
+import UpdateVacante from "./pages/vacantes/UpdateVacante";
+import VacanteDetalle from "./pages/vacantes/VacanteDetalle";
+import CreateVacanteDetalle from "./pages/vacantes/CreateVacanteDetalle";
+import UpdateVacanteDetalle from "./pages/vacantes/UpdateVacanteDetalle";
 
 function App() {
   return (
@@ -65,6 +71,15 @@ function App() {
               <Route path="create" element={<CreatePuesto />} />
               <Route path=":id/update" element={<UpdatePuesto />} />
               <Route path="buscar=:string" element={<Puesto />} />
+            </Route>
+
+            <Route path="vacantes">
+              <Route path="" element={<Vacante/>}/>
+              <Route path="create" element={<CreateVacante/>}/>
+              <Route path=":id/update" element={<UpdateVacante />} />
+              <Route path=":id/detalles" element={<VacanteDetalle />} />
+              <Route path=":id/detalles/create" element={<CreateVacanteDetalle />} />
+              <Route path=":id/detalles/:id_detalle/update" element={<UpdateVacanteDetalle />} />
             </Route>
 
             <Route path="beneficio/">
