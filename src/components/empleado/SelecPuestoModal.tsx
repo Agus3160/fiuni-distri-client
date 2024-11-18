@@ -6,6 +6,7 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { useAuth } from "../../context/auth/useContext";
 import { getPuestos } from "../../lib/api/puesto/puesto.service";
 import { PuestoDto } from "../../lib/api/puesto/puesto.types";
+import { Loader2 } from "lucide-react";
 
 type Props = {
   display: boolean;
@@ -18,6 +19,7 @@ const SelectPuestoModal = ({ display, setDisplay, setValue, setSelectedPuesto }:
   const { session } = useAuth();
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState<PuestoDto[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const debouncedQuery = useDebounce(query, 500);
 
   if (!display) return null;
@@ -37,6 +39,7 @@ const SelectPuestoModal = ({ display, setDisplay, setValue, setSelectedPuesto }:
         "buscar": debouncedQuery,
       } as any);
       setUsers(data.content);
+      setIsLoading(false);
     };
     getUsers();
   }, [debouncedQuery]);
@@ -50,12 +53,16 @@ const SelectPuestoModal = ({ display, setDisplay, setValue, setSelectedPuesto }:
       <div className="d-flex flex-column gap-4">
         <input
           className="flex-grow-1 form-control"
-          placeholder="Buscar por username..."
+          placeholder="Buscar por nombre de puesto..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
         <div className="d-flex flex-column gap-2">
-          {users.length > 0 &&
+          {
+          isLoading?
+            <Loader2 className="mx-auto spin-animation" />
+            :
+          users.length > 0 ?
             users.map((puesto) => (
               <button
                 className="btn btn-outline-primary btn-sm text-start"
@@ -65,7 +72,8 @@ const SelectPuestoModal = ({ display, setDisplay, setValue, setSelectedPuesto }:
               >
                 {puesto.nombre}
               </button>
-            ))}
+            )):
+            <p className="text-center text-muted">No se encontraron puestos</p>}
         </div>
       </div>
     </CustomModal>

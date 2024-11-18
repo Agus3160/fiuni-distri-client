@@ -57,7 +57,7 @@ const Empleado = () => {
           placeholder="Buscar por CI..."
         />
         <CommonsFilterBar />
-        <EmpleadoList empladoList={empleados} setEmpleados={setEmpleados} />
+        <EmpleadoList empladoList={empleados} setEmpleadoList={setEmpleados} />
       </div>
       <Pagination page={page} />
     </div>

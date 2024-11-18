@@ -1,25 +1,36 @@
+import { useState } from "react";
+import { useAuth } from "../../context/auth/useContext";
+import { deleteEmpleadoById } from "../../lib/api/empleado/empleado.service";
 import { EmpleadoDto } from "../../lib/api/empleado/empleado.types";
 import EmpleadoCard from "./EmpleadoCard";
-import { deleteEmpleadoById } from "../../lib/api/empleado/empleado.service";
-import { useAuth } from "../../context/auth/useContext";
+import { toast } from "react-toastify";
 
 type Props = {
   empladoList: EmpleadoDto[];
-  setEmpleados: (data: EmpleadoDto[]) => void;
+  setEmpleadoList: React.Dispatch<React.SetStateAction<EmpleadoDto[] | null>>;
 };
 
-const EmpleadoList = ({ empladoList, setEmpleados }: Props) => {
-
-  const {session} = useAuth();
+const EmpleadoList = ({ empladoList, setEmpleadoList }: Props) => {
+  const { session } = useAuth();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   if (empladoList.length === 0) return <p>No se han encontrado Empleados</p>;
 
-  const deleteHandler = (id:number) => {
-    return async () => {
-      await deleteEmpleadoById(id, session!.accessToken);
-      setEmpleados(empladoList.filter((empl) => empl.id !== id));
+  const deleteHanlder = async (id: number) => {
+    setIsDeleting(true);
+    const { success } = await deleteEmpleadoById(id, session!.accessToken);
+    if (!success) toast.error("Error al eliminar el Empleado");
+    else {
+      setEmpleadoList(
+        (prevEmpleados) => {
+          if(prevEmpleados) return prevEmpleados.filter((empl) => empl.id !== id)
+          else return null
+        }
+      );
+      toast.success("Empleado Eliminado");
     }
-  }
+    setIsDeleting(false);
+  };
 
   return (
     <>
@@ -27,12 +38,12 @@ const EmpleadoList = ({ empladoList, setEmpleados }: Props) => {
         <EmpleadoCard
           key={empl.id}
           empleado={empl}
-          handleDelete={deleteHandler(empl.id)}
+          isDeleting={isDeleting}
+          handleDelete={deleteHanlder}
         />
       ))}
     </>
   );
-
 };
 
 export default EmpleadoList;

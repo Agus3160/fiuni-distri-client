@@ -107,7 +107,7 @@ const EmpleadoForm = ({ initialValues }: Props) => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="d-flex flex-column gap-1">
-          <label htmlFor="nombre">Username:</label>
+          <label htmlFor="nombre">Nombre:</label>
           <input
             {...register("nombre")}
             type="text"

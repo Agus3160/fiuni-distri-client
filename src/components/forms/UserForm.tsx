@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { createUser, updateUser } from "../../lib/api/user/user.service";
 import { useNavigate } from "react-router-dom";
 import { roles } from "../../lib/definitions";
+import { useEffect } from "react";
 
 type Props = {
   initialValues?: UserDto;
@@ -28,6 +29,10 @@ const UserForm = ({ initialValues }: Props) => {
     const { value } = e.target;
     setValue("roles", [value]);
   };
+
+  useEffect(() => {
+    if (!initialValues) setValue("roles", [roles[0]]);
+  }, [initialValues, setValue]);
 
   const onSubmit = async (data: UserDto) => {
     const {

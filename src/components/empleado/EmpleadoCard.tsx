@@ -6,16 +6,17 @@ import { useState } from "react";
 
 type Props = {
   empleado: EmpleadoDto;
-  handleDelete: () => void;
+  isDeleting?: boolean;
+  handleDelete: (id: number) => void;
 };
 
-const EmpleadoCard = ({ empleado, handleDelete }: Props) => {
+const EmpleadoCard = ({ empleado, handleDelete, isDeleting }: Props) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);
 
   const handleSubmitModal = () => {
-    handleDelete();
+    handleDelete(empleado.id);
     setShowModal(false);
   };
   const handleCloseModal = () => setShowModal(false);
@@ -25,10 +26,11 @@ const EmpleadoCard = ({ empleado, handleDelete }: Props) => {
       {showModal && (
         <Modal
           type="danger"
-          title="Eliminar usuario"
-          body="¿Deseas eliminar este usuario?"
+          title="Eliminar Empleado"
+          body="¿Deseas eliminar este empleado?"
           cancelText="Cancelar"
-          submitText="Eliminar usuario"
+          submitText="Eliminar"
+          isLoading={isDeleting}
           onClose={handleCloseModal}
           onSubmit={handleSubmitModal}
         />

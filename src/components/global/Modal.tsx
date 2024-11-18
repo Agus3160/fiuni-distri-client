@@ -2,6 +2,7 @@ type Props = {
   title: string;
   body: string;
   type: "primary" | "danger" | "warning";
+  isLoading?: boolean;
   submitText?: string;
   cancelText?: string;
   onClose: () => void;
@@ -13,13 +14,14 @@ const Modal = ({
   body,
   submitText,
   cancelText,
+  isLoading,
   type,
   onClose,
   onSubmit,
 }: Props) => {
   return (
-    <div className="bg-dark bg-opacity-75 position-fixed w-100 h-100 top-0 left-0 right-0 bottom-0 z-1 ">
-      <div className="modal fade show d-block " tabIndex={-1}>
+    <div className=" position-fixed top-0 left-0 right-0 bottom-0" style={{zIndex:20}}>
+      <div className="modal fade show d-block bg-dark bg-opacity-75" tabIndex={-1}>
       <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
@@ -45,6 +47,7 @@ const Modal = ({
                 {cancelText ? cancelText : "Close"}
               </button>
               <button
+                disabled={isLoading}
                 onClick={onSubmit}
                 type="button"
                 className={`btn btn-${type}`}

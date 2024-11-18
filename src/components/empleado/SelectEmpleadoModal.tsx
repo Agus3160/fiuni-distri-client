@@ -1,52 +1,53 @@
 import { useEffect, useState } from "react";
-import { UseFormSetValue } from "react-hook-form";
-import { EmpleadoDto } from "../../lib/api/empleado/empleado.types";
+import { FieldValues, Path, UseFormSetValue } from "react-hook-form";
 import CustomModal from "../global/CustomModal";
-import { UserDto } from "../../lib/api/user/user.types";
 import { useDebounce } from "@uidotdev/usehooks";
-import { getAllUsers } from "../../lib/api/user/user.service";
 import { useAuth } from "../../context/auth/useContext";
 import { Loader2 } from "lucide-react";
+import { getAllEmpleados } from "../../lib/api/empleado/empleado.service";
+import { EmpleadoDto } from "../../lib/api/empleado/empleado.types";
 
-type Props = {
+type Props<T extends FieldValues> = {
   display: boolean;
   setDisplay: (value: boolean) => void;
-  setValue: UseFormSetValue<EmpleadoDto>;
-  setSelectedUser: (data: string | null) => void;
+  setValue: UseFormSetValue<T>;
+  setSelectedEmpleado: (data: string | null) => void;
 };
 
-const SelectUserModal = ({
+
+const SelectEmpleadoModal = <T extends FieldValues>({
   display,
   setDisplay,
   setValue,
-  setSelectedUser,
-}: Props) => {
+  setSelectedEmpleado,
+}: Props<T>) => {
   const { session } = useAuth();
+
   const [query, setQuery] = useState("");
-  const [users, setUsers] = useState<UserDto[]>([]);
+  const [empleados, setEmpleados] = useState<EmpleadoDto[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const debouncedQuery = useDebounce(query, 500);
 
   if (!display) return null;
 
   const onCloseHanlder = () => setDisplay(false);
-  const onSubmitHandler = (id: number, username: string) => {
+  const onSubmitHandler = (id: number, nombreEmpleado: string) => {
     return () => {
-      setSelectedUser(username);
-      setValue("user_id", id, { shouldValidate: true });
+      setSelectedEmpleado(nombreEmpleado);
+      setValue("empleado_id" as Path<T>, id as any, { shouldValidate: true });
       setDisplay(false);
     };
   };
 
   useEffect(() => {
-    const getUsers = async () => {
-      const { data } = await getAllUsers(session!.accessToken, {
-        username: debouncedQuery,
+    const getEmpleados = async () => {
+      const { data } = await getAllEmpleados(session!.accessToken, {
+        ci: debouncedQuery,
       });
-      setUsers(data.content);
+      setEmpleados(data.content);
       setIsLoading(false);
     };
-    getUsers();
+    getEmpleados();
   }, [debouncedQuery]);
 
   return (
@@ -58,26 +59,26 @@ const SelectUserModal = ({
       <div className="d-flex flex-column gap-4">
         <input
           className="flex-grow-1 form-control"
-          placeholder="Buscar por username..."
+          placeholder="Buscar por CI..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
         <div className="d-flex flex-column gap-2">
           {isLoading ? (
             <Loader2 className="mx-auto spin-animation" />
-          ) : users.length > 0 ? (
-            users.map((user) => (
+          ) : empleados.length > 0 ? (
+            empleados.map((empl) => (
               <button
                 className="btn btn-outline-primary btn-sm text-start"
                 type="button"
-                onClick={onSubmitHandler(user.id, user.username)}
-                key={user.id}
+                onClick={onSubmitHandler(empl.id, empl.nombre + "-" + empl.ci)}
+                key={empl.id}
               >
-                {user.username}
+                {empl.nombre}
               </button>
             ))
           ) : (
-            <p className="text-center text-muted">No se encontraron usuarios</p>
+            <p className="text-center text-muted">No se encontraron empleados</p>
           )}
         </div>
       </div>
@@ -85,4 +86,4 @@ const SelectUserModal = ({
   );
 };
 
-export default SelectUserModal;
+export default SelectEmpleadoModal;

@@ -6,25 +6,26 @@ import Modal from "../global/Modal";
 
 type Props = {
   user: UserDto;
-  deleteHandler: () => void;
+  isDeleting?: boolean;
+  deleteHandler: (id:number) => void;
 };
 
-const UserCard = ({ user, deleteHandler }: Props) => {
+const UserCard = ({ user, deleteHandler, isDeleting }: Props) => {
+
   const [showModal, setShowModal] = useState(false);
-
   const handleShowModal = () => setShowModal(true);
-
+  const handleCloseModal = () => setShowModal(false);
   const handleSubmitModal = () => {
-    deleteHandler();
+    deleteHandler(user.id);
     setShowModal(false);
   };
-  const handleCloseModal = () => setShowModal(false);
 
   return (
     <>
       {showModal && (
         <Modal
           type="danger"
+          isLoading={isDeleting}
           title="Eliminar usuario"
           body="¿Deseas eliminar este usuario?"
           cancelText="Cancelar"
