@@ -23,6 +23,12 @@ import CreateBeneficio from "./pages/beneficio/CreateBeneficio";
 import UpdateBeneficio from "./pages/beneficio/UpdateBeneficio";
 import EmpleadoDetalles from "./pages/empleado/EmpleadoDetalles";
 import EditarEmpleado from "./pages/empleado/EditarEmpleado";
+import CreateVacante from "./pages/vacantes/CreateVacante";
+import Vacante from "./pages/vacantes/Vacante";
+import UpdateVacante from "./pages/vacantes/UpdateVacante";
+import VacanteDetalle from "./pages/vacantes/VacanteDetalle";
+import CreateVacanteDetalle from "./pages/vacantes/CreateVacanteDetalle";
+import UpdateVacanteDetalle from "./pages/vacantes/UpdateVacanteDetalle";
 import Evaluaciones from "./pages/evaluacion/Evaluaciones";
 import CreateEvaluacion from "./pages/evaluacion/CreateEvaluacion";
 import Evaluacion from "./pages/evaluacion/Evaluacion";
@@ -70,14 +76,6 @@ function App() {
               <Route path="create" element={<CreatePuesto />} />
               <Route path=":id/update" element={<UpdatePuesto />} />
               <Route path="buscar=:string" element={<Puesto />} />
-            </Route>
-
-            <Route path="evaluacion/" >
-              <Route path="" element={<Evaluaciones />} />
-              <Route path="create" element={<CreateEvaluacion />} />
-              <Route path=":id/update" element={<EditarEvaluacion />} />
-              <Route path=":evaluacionId/detalle/:evaluacionDetalleId/update" element={<EditarEvaluacionDetalle />} />
-              <Route path=":id" element={<Evaluacion />} />
             </Route>
 
             <Route path="beneficio/">
