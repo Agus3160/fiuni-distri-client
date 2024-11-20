@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";  // Para la navegación, si es necesario
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { BeneficioDetalleDto } from "../../lib/api/beneficioDetalle/beneficioDetalle.types";
@@ -7,7 +6,7 @@ import { BeneficioDetalleDto } from "../../lib/api/beneficioDetalle/beneficioDet
 const BeneficioDetalleForm = () => {
   const [empleados, setEmpleados] = useState<{ id: number; nombre: string }[]>([]);
   const beneficioId = localStorage.getItem("beneficioId");  // Obtener el ID desde localStorage
-  const { register, handleSubmit, watch } = useForm<BeneficioDetalleDto>({
+  const { register, handleSubmit } = useForm<BeneficioDetalleDto>({
     defaultValues: {
       beneficio_id: beneficioId ? parseInt(beneficioId) : 0,  // Asegúrate de que el ID se pasa correctamente
     },

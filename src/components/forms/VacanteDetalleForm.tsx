@@ -37,6 +37,7 @@ const VacanteDetalleForm = ({ initialValues }: Props) => {
     setShowModal(false); 
   };
 
+  console.log(isLoading);
 
   const noAgregarDetalles = () => {
     navigate(`/vacantes/${id}/detalles`);

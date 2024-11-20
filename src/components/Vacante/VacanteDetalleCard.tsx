@@ -58,6 +58,9 @@ const VacanteDetalleCard = ({vacanteDetalle, paginationVacanteDetalle, setPagina
       }, [id, session, navigate]);
 
 
+  console.log(isLoading);
+
+
       useEffect(() => {
         const fetchEncargado = async () => {
           try {

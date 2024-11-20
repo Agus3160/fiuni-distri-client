@@ -55,7 +55,7 @@ const UpdateBeneficio = () => {
           className="p-4 rounded mx-auto"
           style={{ maxWidth: "400px", width: "100%" }}
         >
-          <BeneficioForm initialValues={beneficio} />
+          <BeneficioForm />
         </div>
       </div>
     </div>
