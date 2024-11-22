@@ -1,9 +1,9 @@
 import { api } from "../../api";
-import { ApiResponse, PaginationResponse } from "../../definitions";
+import { API_HOST_URL, ApiResponse, PaginationResponse } from "../../definitions";
 import { mapObjectToQueryStringParams } from "../../utils";
 import { UserDto, UserFilter } from "./user.types";
 
-const tempHostUrl = "http://localhost:9091/";
+const tempHostUrl = API_HOST_URL;
 
 export const getAllUsers = async (
   accessToken: string,

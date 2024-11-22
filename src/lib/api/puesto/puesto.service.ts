@@ -1,9 +1,9 @@
 import { api } from "../../api";
-import { PaginationResponse2 } from "../../definitions";
+import { API_HOST_URL, PaginationResponse2 } from "../../definitions";
 import { mapObjectToQueryStringParams } from "../../utils";
 import { CreatePuestoType, PuestoDto, PuestoFilter } from "./puesto.types";
 
-const tempHostUrl = "http://localhost:9092/";
+const tempHostUrl = API_HOST_URL;
 
 export const getPuestoById = async (id: number, accessToken: string) => {
   return await api<PuestoDto>(

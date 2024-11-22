@@ -4,7 +4,7 @@ export type NavLink = {
   url: string
   name: string
   auth: "auth" | "no-auth" | "both"
-  role?: RoleType
+  role?: RoleType[]
 }
 
 export const navLinks: NavLink[] = [
@@ -22,43 +22,43 @@ export const navLinks: NavLink[] = [
     url:"puestos",
     name:"Puestos",
     auth:"auth",
-    role:"USER"
+    role:["USER", "ADMIN"]
   },
   {
     url:"empleado",
     name:"Empleados",
     auth:"auth",
-    role:"USER"
+    role:["USER", "ADMIN"]
   },
   {
     url:"user",
     name:"User",
     auth:"auth",
-    role:"USER"
+    role:["USER", "ADMIN"]
   },
   {
     url:"role",
     name:"Role",
     auth:"auth",
-    role:"USER"
+    role:["ADMIN"]
   },
   {
     url:"evaluacion",
     name:"Evaluaciones",
     auth:"auth",
-    role:"USER"
+    role:["USER", "ADMIN"]
   },
   {
     url:"beneficio",
     name:"Beneficio",
     auth:"auth",
-    //role:"USER"
+    role:["USER", "ADMIN"]
   },
   {
     url:"vacantes",
 	  name:"Vacantes",
     auth:"auth",
-    role:"USER"
+    role:["USER", "ADMIN"]
   },
   {
     url:"about",

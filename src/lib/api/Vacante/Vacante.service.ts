@@ -1,10 +1,10 @@
 import { api } from "../../api";
-import { PaginationResponse2 } from "../../definitions";
+import { API_HOST_URL, PaginationResponse2 } from "../../definitions";
 import { mapObjectToQueryStringParams } from "../../utils";
 import { CreateVacanteType, VacanteDto, VacanteFilter } from "./vacante.types";
 
 
-const tempHostUrl = "http://localhost:9092/";
+const tempHostUrl = API_HOST_URL;
 
 
 export const deleteVacanteById = async(id: number, accessToken: string) =>{

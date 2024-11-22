@@ -1,9 +1,9 @@
 import { api } from "../../api";
-import { PaginationResponse } from "../../definitions";
+import { API_HOST_URL, PaginationResponse } from "../../definitions";
 import { mapObjectToQueryStringParams } from "../../utils";
 import { CreateBeneficioDetalleDto, BeneficioDetalleDto, BeneficioDetalleFilter } from "./beneficioDetalle.types";
 
-const tempHostUrl = "http://localhost:9091/";
+const tempHostUrl = API_HOST_URL;
 
 // Obtener un BeneficioDetalle por ID
 export const getBeneficioDetalleById = async (id: number, accessToken: string) => {

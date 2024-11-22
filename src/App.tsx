@@ -34,6 +34,7 @@ import UpdateVacante from "./pages/vacantes/UpdateVacante";
 import VacanteDetalle from "./pages/vacantes/VacanteDetalle";
 import CreateVacanteDetalle from "./pages/vacantes/CreateVacanteDetalle";
 import UpdateVacanteDetalle from "./pages/vacantes/UpdateVacanteDetalle";
+import ProtectedByRoleRoute from "./components/routes/ProtectedByRoleRoute";
 
 function App() {
   return (
@@ -50,12 +51,8 @@ function App() {
 
           {/* Authenticated routes */}
           <Route element={<ProtectedRoute />}>
-            
-            <Route path="role/">
-              <Route path="" element={<Role />} />
-              <Route path="create" element={<CreateRole />} />
-              <Route path="update/:id" element={<UpdateRole />} />
-            </Route>
+
+
 
             <Route path="user/">
               <Route path="" element={<User />} />
@@ -87,8 +84,8 @@ function App() {
             </Route>
 
             <Route path="vacantes">
-              <Route path="" element={<Vacante/>}/>
-              <Route path="create" element={<CreateVacante/>}/>
+              <Route path="" element={<Vacante />} />
+              <Route path="create" element={<CreateVacante />} />
               <Route path=":id/update" element={<UpdateVacante />} />
               <Route path=":id/detalles" element={<VacanteDetalle />} />
               <Route path=":id/detalles/create" element={<CreateVacanteDetalle />} />
@@ -105,7 +102,13 @@ function App() {
           </Route>
 
           {/* Authorized routes */}
-          <Route></Route>
+          <Route element={<ProtectedByRoleRoute rol={["ADMIN"]} />}>
+            <Route path="role/">
+              <Route path="" element={<Role />} />
+              <Route path="create" element={<CreateRole />} />
+              <Route path="update/:id" element={<UpdateRole />} />
+            </Route>
+          </Route>
 
           {/* Error routes */}
           <Route path="forbiden" element={<Forbiden />} />

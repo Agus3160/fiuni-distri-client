@@ -1,9 +1,9 @@
 import { api } from "../../api";
-import { PaginationResponse } from "../../definitions";
+import { API_HOST_URL, PaginationResponse } from "../../definitions";
 import { mapObjectToQueryStringParams } from "../../utils";
 import { CreateRoleType, RoleDto, RoleFilter } from "./rol.types";
 
-const tempHostUrl = "http://localhost:9091/";
+const tempHostUrl = API_HOST_URL;
 
 export const getRolById = async (id: number, accessToken: string) => {
   return await api<RoleDto>(

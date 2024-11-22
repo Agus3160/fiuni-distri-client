@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { navLinks } from "./data";
 import { useAuth } from "../../context/auth/useContext";
+import { validateRoles } from "../../lib/utils";
 
 export default function NavBar() {
   const { isAuth, logout } = useAuth();
@@ -46,7 +47,7 @@ export default function NavBar() {
                   n.role &&
                   (!session?.roles ||
                     session.roles.length === 0 ||
-                    !session?.roles.includes(n.role))
+                    !validateRoles(session.roles, n.role))
                 )
                   return;
                 return (

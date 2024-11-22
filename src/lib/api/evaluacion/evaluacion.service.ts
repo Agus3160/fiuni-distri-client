@@ -1,5 +1,5 @@
 import { api } from "../../api";
-import { PaginationResponse } from "../../definitions";
+import { API_HOST_URL, PaginationResponse } from "../../definitions";
 import { mapObjectToQueryStringParams } from "../../utils";
 import { EvaluacionDetalleDtoType } from "../evaluacion-detalle/evaluacion-detalle.types";
 import {
@@ -10,7 +10,7 @@ import {
   EvaluacionWithShortDetallesType,
 } from "./evaluacion.types";
 
-const tempHostUrl = "http://localhost:9095/";
+const tempHostUrl = API_HOST_URL;
 
 export const getAllEvaluaciones = async (
   filter: EvaluacionFilter,
